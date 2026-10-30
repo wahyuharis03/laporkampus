@@ -49,3 +49,6 @@ app.*.map.json
 
 # Data lokal asisten AI (bukan bagian project)
 .workbuddy-ai/
+
+# Berkas kerja pipeline dokumen (bukan bagian project)
+output/
