@@ -66,6 +66,28 @@ void main() {
     expect(find.text('Laporan Terbaru'), findsOneWidget);
   });
 
+  testWidgets('Layar lebar memakai NavigationRail, bukan NavigationBar',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(1280, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(const LaporKampusApp());
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Masukkan NIM Anda'),
+      '23.01.55.0003',
+    );
+    await tester.enterText(
+      find.widgetWithText(TextField, 'Masukkan password Anda'),
+      'rahasia',
+    );
+    await tester.tap(find.widgetWithText(FilledButton, 'Masuk'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(NavigationRail), findsOneWidget);
+    expect(find.byType(NavigationBar), findsNothing);
+  });
+
   testWidgets('Tombol Buat Laporan membuka Form Laporan',
       (WidgetTester tester) async {
     await bukaFormLaporan(tester);

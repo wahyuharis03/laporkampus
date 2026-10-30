@@ -85,7 +85,7 @@ lib/
     keadaan_kosong.dart         # komponen keadaan kosong yang dipakai ulang
     label_status.dart           # chip status Menunggu / Diproses / Selesai
 test/
-  widget_test.dart              # 6 widget test
+  widget_test.dart              # 7 widget test
 docs/                           # screenshot untuk README
 ```
 
