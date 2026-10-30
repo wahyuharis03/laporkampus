@@ -1,0 +1,22 @@
+{
+  "name": "laporkampus-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Video proposal LaporKampus — Remotion + edge-tts",
+  "scripts": {
+    "studio": "remotion studio",
+    "tts": "python scripts/tts.py",
+    "render": "remotion render LaporKampus out/laporkampus-proposal.mp4",
+    "render:draft": "remotion render LaporKampus out/draft.mp4 --scale=0.6667"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "typescript": "^5.6.3"
+  }
+}
