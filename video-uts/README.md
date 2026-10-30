@@ -6,6 +6,11 @@ Dibuat dengan [Remotion](https://remotion.dev) (React → video) dan
 
 Hasil: `out/laporkampus-proposal.mp4` — 1920×1080, 30 fps, H.264 + AAC, 3 menit 18 detik.
 
+**Unduh:** <https://github.com/wahyuharis03/laporkampus/releases/download/video-proposal-v1/laporkampus-proposal.mp4>
+
+Berkas video tidak disimpan di dalam repository (21 MB dan bisa dibangkitkan ulang),
+melainkan dilampirkan sebagai aset Release `video-proposal-v1`.
+
 Riwayat perubahan naskah ada di [CATATAN-REVISI.md](CATATAN-REVISI.md).
 
 ## Kenapa audio dulu, video kemudian

@@ -18,6 +18,18 @@ Proyek individu MK Mobile and Web Application Development, Semester Ganjil 2026/
 - **Desain Figma (Minggu 4):**
   <https://www.figma.com/make/RiyY93QWEjZXQP93Cx6Sui/Untitled?code-node-id=0-6&p=f&t=EnpQyA2fcK40nQhe-0&fullscreen=1>
 - **Repository GitHub:** <https://github.com/wahyuharis03/laporkampus>
+- **Video proposal UTS:** <https://github.com/wahyuharis03/laporkampus/releases/download/video-proposal-v1/laporkampus-proposal.mp4>
+
+## Video proposal UTS
+
+Video 3 menit 18 detik yang menjelaskan masalah, target pengguna, dan cakupan
+aplikasi. Dibuat dengan Remotion dan narasi Bahasa Indonesia dari edge-tts.
+
+- **Tonton atau unduh:**
+  <https://github.com/wahyuharis03/laporkampus/releases/download/video-proposal-v1/laporkampus-proposal.mp4>
+- **Kode sumber video:** [`video-uts/`](video-uts/) — narasi, skrip pembangkit audio,
+  dan komponen tiap adegan
+- **Catatan revisi naskah:** [`video-uts/CATATAN-REVISI.md`](video-uts/CATATAN-REVISI.md)
 
 ## Tangkapan layar
 
