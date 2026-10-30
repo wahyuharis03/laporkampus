@@ -23,20 +23,71 @@ Proyek individu MK Mobile and Web Application Development, Semester Ganjil 2026/
 
 | Halaman Login | Halaman Beranda |
 | --- | --- |
-| ![Halaman Login](docs/screenshot-login.png) | ![Halaman Beranda](docs/screenshot-beranda.png) |
+| ![Login](docs/screenshot-login.png) | ![Beranda](docs/screenshot-beranda.png) |
 
-## Fitur yang sudah ada
+| Form Laporan | Form Laporan — validasi |
+| --- | --- |
+| ![Form Laporan](docs/screenshot-form-laporan.png) | ![Validasi form](docs/screenshot-form-validasi.png) |
 
-| Halaman | Status | Keterangan |
-| --- | --- | --- |
-| Login | Selesai (UI) | Input NIM dan password, tombol lihat password, validasi kolom kosong |
-| Beranda | Selesai (UI) | Sapaan, tombol aksi utama "Buat Laporan", kartu menu "Laporan Saya" |
-| Form Laporan | Belum | Direncanakan pada pertemuan 6–7 |
-| Laporan Saya | Belum | Direncanakan pada pertemuan 6–7 |
-| Detail Laporan | Belum | Prioritas Should |
+| Laporan Saya | Keadaan kosong |
+| --- | --- |
+| ![Laporan Saya](docs/screenshot-laporan-saya.png) | ![Keadaan kosong](docs/screenshot-keadaan-kosong.png) |
 
-Login masih berupa simulasi: setiap NIM dan password yang tidak kosong akan masuk
-ke Beranda. Firebase Authentication belum dihubungkan pada tahap ini.
+| Detail Laporan |
+| --- |
+| ![Detail Laporan](docs/screenshot-detail-laporan.png) |
+
+## Halaman dan navigasi
+
+| Kode | Halaman | Prioritas | Keterangan |
+| --- | --- | --- | --- |
+| H1 | Login | Must | NIM dan password, validasi kolom kosong, di luar menu navigasi |
+| H2 | Beranda | Must | Sapaan, ringkasan status, tombol aksi utama, laporan terbaru |
+| H3 | Form Laporan | Must | Form 6 kolom dengan validasi, dibuka lewat `Navigator.push` |
+| H4 | Laporan Saya | Must | Daftar laporan + filter status, keadaan kosong |
+| H5 | Detail Laporan | Should | Rincian satu laporan, dibuka dari Beranda atau Laporan Saya |
+
+Navigasi utama memakai `NavigationBar` di ponsel dan berubah menjadi
+`NavigationRail` pada lebar layar ≥ 600 px. Menu yang sama dipakai di kedua
+ukuran: **Beranda** dan **Laporan Saya**.
+
+## Aturan validasi form
+
+| Kolom | Widget | Aturan | Pesan kesalahan |
+| --- | --- | --- | --- |
+| Lokasi fasilitas | `TextFormField` | Wajib; minimal 5 karakter | Lokasi fasilitas wajib diisi / Lokasi minimal 5 karakter |
+| Kategori kerusakan | `DropdownButtonFormField` | Wajib dipilih | Kategori wajib dipilih |
+| Tingkat urgensi | `DropdownButtonFormField` | Wajib dipilih | Tingkat urgensi wajib dipilih |
+| Tanggal kejadian | `TextFormField` + `showDatePicker` | Wajib; 30 hari terakhir s.d. hari ini | Tanggal wajib diisi |
+| Jumlah unit rusak | `TextFormField` angka | Wajib; angka; > 0; ≤ 50 | Jumlah unit tidak boleh nol / Maksimal 50 unit per laporan |
+| Deskripsi kerusakan | `TextFormField` multiline | Wajib; minimal 15 karakter | Deskripsi minimal 15 karakter |
+
+Hasil kirim ditampilkan lewat `SnackBar`: merah bila masih ada kolom yang salah,
+hijau bila laporan berhasil disimpan.
+
+## Struktur project
+
+```
+lib/
+  main.dart                     # akar aplikasi: tema dan halaman pertama
+  data/
+    data_laporan.dart           # model Laporan, data simulasi, helper format
+  pages/
+    login_page.dart             # H1 Login
+    halaman_utama.dart          # NavigationBar / NavigationRail
+    beranda_page.dart           # H2 Beranda
+    form_laporan_page.dart      # H3 Form Laporan
+    laporan_saya_page.dart      # H4 Laporan Saya
+    detail_laporan_page.dart    # H5 Detail Laporan
+  theme/
+    app_theme.dart              # palet, jarak, dan tema Material 3
+  widgets/
+    keadaan_kosong.dart         # komponen keadaan kosong yang dipakai ulang
+    label_status.dart           # chip status Menunggu / Diproses / Selesai
+test/
+  widget_test.dart              # 6 widget test
+docs/                           # screenshot untuk README
+```
 
 ## Cara menjalankan
 
@@ -61,34 +112,27 @@ flutter analyze   # memeriksa masalah kode
 flutter test      # menjalankan widget test
 ```
 
-## Struktur project
+## Catatan tentang data
 
-```
-lib/
-  main.dart            # tema aplikasi, LoginPage, BerandaPage
-test/
-  widget_test.dart     # pengujian validasi login dan navigasi ke Beranda
-docs/
-  screenshot-login.png
-  screenshot-beranda.png
-web/  android/  ios/    # pengaturan platform, jarang diubah
-pubspec.yaml           # dependensi dan metadata project
-```
+Data masih disimpan di `List<Laporan>` di memori (`lib/data/data_laporan.dart`).
+Laporan yang dikirim akan tampil di Beranda dan Laporan Saya selama aplikasi
+berjalan, lalu kembali ke data simulasi awal setelah aplikasi dimuat ulang.
+Pemindahan data ke Cloud Firestore dilakukan setelah UTS.
 
 ## Gaya visual
 
-Mengikuti style guide mini Minggu 4:
+Mengikuti style guide mini Minggu 4. Palet sengaja dibatasi lima warna:
 
-- Warna primer maroon `#800020`
-- Latar halaman `#F5F6F8`, teks utama `#25283A`
-- Radius sudut 10, tinggi tombol utama 52
-- Warna status: berhasil `#15803D`, menunggu `#D97706`, galat `#DC2626`
+- Primer maroon `#800020`
+- Latar `#F5F6F8`, teks utama `#25283A`, teks sekunder `#6B7280`, garis `#D9DEE7`
+- Status: menunggu `#D97706`, selesai `#15803D`, galat `#DC2626`
+- Jarak kelipatan 8 (8 / 16 / 24), radius 10–12, tombol utama tinggi 52
 
 ## Batasan project
 
 - Flutter + Dart, Firebase paket Spark (tanpa billing account)
 - Autentikasi email/password, bukan OTP telepon
-- Tanpa Cloud Functions dan payment gateway
+- Tanpa Cloud Functions, payment gateway, dan paket tambahan dari pub.dev
 - Satu peran pengguna: mahasiswa
 
 ## Riwayat pertemuan
@@ -100,3 +144,5 @@ Mengikuti style guide mini Minggu 4:
 | 3 | User flow, sitemap, prioritas halaman, rancangan navigasi |
 | 4 | Wireframe dan style guide mini di Figma |
 | 5 | Project Flutter berjalan, repository GitHub, README |
+| 6 | Lima halaman terhubung, NavigationBar, data simulasi, keadaan kosong |
+| 7 | Form Laporan dengan validasi, SnackBar status, dan state sederhana |
