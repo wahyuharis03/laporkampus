@@ -5,19 +5,19 @@ import {masuk} from '../components/anim';
 import {LabelBagian} from '../components/LabelBagian';
 
 const MASUK = [
-  'Lima halaman terhubung',
-  'Formulir 6 kolom dengan validasi',
-  'Penyaringan status laporan',
-  'Keadaan kosong yang menjelaskan',
-  'Tata letak menyesuaikan lebar layar',
+  'Login dengan NIM dan password',
+  'Beranda mahasiswa',
+  'Form laporan kerusakan',
+  'Validasi formulir',
+  'Daftar laporan dan statusnya',
 ];
 
 const KELUAR = [
-  'Basis data sungguhan',
-  'Unggah foto kerusakan',
-  'Peran petugas dan panel admin',
-  'Notifikasi dan surel',
-  'Peta dan lokasi otomatis',
+  'Integrasi basis data produksi',
+  'Akun dan dashboard petugas Sarpras',
+  'Notifikasi otomatis',
+  'Peta lokasi fasilitas',
+  'Unggah foto sebagai fitur wajib',
 ];
 
 export const Cakupan: React.FC = () => {
@@ -28,7 +28,7 @@ export const Cakupan: React.FC = () => {
       style={{
         flex: 1,
         boxSizing: 'border-box',
-        padding: '38px 40px',
+        padding: '36px 38px',
         backgroundColor: w.kartu,
         border: `1px solid ${w.tepi}`,
         borderTop: `4px solid ${hijau ? w.hijau : w.tepi}`,
@@ -39,11 +39,11 @@ export const Cakupan: React.FC = () => {
       <div
         style={{
           fontFamily: f.isi,
-          fontSize: 23,
+          fontSize: 22,
           fontWeight: 700,
           letterSpacing: '0.16em',
           color: hijau ? w.hijau : w.redup,
-          marginBottom: 26,
+          marginBottom: 24,
         }}
       >
         {judul.toUpperCase()}
@@ -56,7 +56,7 @@ export const Cakupan: React.FC = () => {
             display: 'flex',
             alignItems: 'flex-start',
             gap: 16,
-            marginBottom: 20,
+            marginBottom: 18,
             ...masuk(frame, delay + 18 + i * 10),
           }}
         >
@@ -75,7 +75,7 @@ export const Cakupan: React.FC = () => {
           <div
             style={{
               fontFamily: f.isi,
-              fontSize: 27,
+              fontSize: 26,
               lineHeight: 1.35,
               color: hijau ? w.teks : w.redup,
             }}
@@ -96,15 +96,16 @@ export const Cakupan: React.FC = () => {
           position: 'absolute',
           left: PAD,
           right: PAD,
-          top: 190,
+          top: 176,
           fontFamily: f.judul,
-          fontSize: 62,
+          fontSize: 56,
           lineHeight: 1.18,
           color: w.teks,
+          maxWidth: 1420,
           ...masuk(frame, 8),
         }}
       >
-        Satu alur inti, bukan daftar keinginan
+        Proyek awal, bukan sistem Sarpras menyeluruh
       </div>
 
       <div
@@ -112,13 +113,13 @@ export const Cakupan: React.FC = () => {
           position: 'absolute',
           left: PAD,
           right: PAD,
-          top: 350,
+          top: 330,
           display: 'flex',
           gap: 28,
         }}
       >
-        {kolom('Termasuk', MASUK, true, 30)}
-        {kolom('Di luar cakupan', KELUAR, false, 46)}
+        {kolom('Termasuk dalam scope', MASUK, true, 30)}
+        {kolom('Di luar scope', KELUAR, false, 46)}
       </div>
 
       <div
@@ -126,15 +127,15 @@ export const Cakupan: React.FC = () => {
           position: 'absolute',
           left: PAD,
           right: PAD,
-          bottom: 92,
+          bottom: 88,
           fontFamily: f.judul,
-          fontSize: 36,
+          fontSize: 34,
           fontStyle: 'italic',
           color: w.aksenMuda,
           ...masuk(frame, 130),
         }}
       >
-        Bukan karena tidak mampu, tetapi karena satu alur harus selesai dan teruji lebih dahulu.
+        Bukan karena tidak mampu, tetapi agar satu alur inti selesai lebih dahulu.
       </div>
     </AbsoluteFill>
   );

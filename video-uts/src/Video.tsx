@@ -14,8 +14,7 @@ import {Masalah} from './scenes/Masalah';
 import {Target} from './scenes/Target';
 import {Cakupan} from './scenes/Cakupan';
 import {Alur} from './scenes/Alur';
-import {Bukti} from './scenes/Bukti';
-import {BasisData} from './scenes/BasisData';
+import {Validasi} from './scenes/Validasi';
 import {Penutup} from './scenes/Penutup';
 
 const PETA: Record<string, React.FC> = {
@@ -24,8 +23,7 @@ const PETA: Record<string, React.FC> = {
   target: Target,
   cakupan: Cakupan,
   alur: Alur,
-  bukti: Bukti,
-  basisdata: BasisData,
+  validasi: Validasi,
   penutup: Penutup,
 };
 

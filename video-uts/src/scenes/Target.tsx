@@ -4,11 +4,11 @@ import {f, PAD, w} from '../theme';
 import {masuk} from '../components/anim';
 import {LabelBagian} from '../components/LabelBagian';
 
-const ATRIBUT = [
-  {label: 'Perangkat', isi: 'Ponsel Android, data seluler'},
-  {label: 'Kebiasaan', isi: 'Melapor sambil berdiri di lokasi kejadian'},
-  {label: 'Kebutuhan', isi: 'Formulir singkat, status yang pasti'},
-  {label: 'Kejengkelan', isi: 'Formulir panjang, laporan tanpa balasan'},
+const KEBUTUHAN = [
+  'Menyampaikan laporan kerusakan dengan mudah',
+  'Mengisi informasi lokasi dan kerusakan secara jelas',
+  'Melihat daftar laporan yang pernah dikirim',
+  'Mengetahui perkembangan status laporan',
 ];
 
 export const Target: React.FC = () => {
@@ -28,11 +28,10 @@ export const Target: React.FC = () => {
           fontSize: 58,
           lineHeight: 1.18,
           color: w.teks,
-          maxWidth: 1240,
           ...masuk(frame, 8),
         }}
       >
-        Mahasiswa yang melapor dari lokasi kejadian
+        Mahasiswa sebagai pengguna utama
       </div>
 
       {/* Kartu persona */}
@@ -40,10 +39,10 @@ export const Target: React.FC = () => {
         style={{
           position: 'absolute',
           left: PAD,
-          top: 400,
-          width: 560,
+          top: 326,
+          width: 520,
           boxSizing: 'border-box',
-          padding: '48px 44px',
+          padding: '40px 40px 52px',
           backgroundColor: w.kartu,
           border: `1px solid ${w.tepi}`,
           borderTop: `4px solid ${w.aksen}`,
@@ -53,9 +52,9 @@ export const Target: React.FC = () => {
       >
         <div
           style={{
-            width: 124,
-            height: 124,
-            borderRadius: 62,
+            width: 112,
+            height: 112,
+            borderRadius: 56,
             backgroundColor: w.aksen,
             display: 'flex',
             alignItems: 'center',
@@ -63,79 +62,128 @@ export const Target: React.FC = () => {
             fontFamily: f.judul,
             fontSize: 44,
             color: '#FFFFFF',
-            marginBottom: 28,
+            marginBottom: 26,
           }}
         >
           DA
         </div>
+
+        <div
+          style={{
+            display: 'inline-block',
+            fontFamily: f.isi,
+            fontSize: 17,
+            fontWeight: 700,
+            letterSpacing: '0.14em',
+            color: w.kuning,
+            border: `1px solid ${w.kuning}`,
+            borderRadius: 4,
+            padding: '5px 10px',
+            marginBottom: 16,
+          }}
+        >
+          PERSONA ILUSTRATIF
+        </div>
+
         <div
           style={{
             fontFamily: f.isi,
-            fontSize: 38,
+            fontSize: 34,
             fontWeight: 700,
             color: w.teks,
           }}
         >
-          Dimas Aryo Pratama
+          Dimas
         </div>
         <div
           style={{
             fontFamily: f.isi,
-            fontSize: 24,
+            fontSize: 23,
             color: w.redup,
             marginTop: 10,
-            lineHeight: 1.45,
+            lineHeight: 1.5,
           }}
         >
-          Mahasiswa semester 5
+          Mahasiswa yang melapor sambil berdiri
           <br />
-          Aktif di dua organisasi
+          di lokasi kejadian
+        </div>
+        <div
+          style={{
+            fontFamily: f.isi,
+            fontSize: 19,
+            fontStyle: 'italic',
+            color: w.redup,
+            marginTop: 18,
+            paddingTop: 16,
+            borderTop: `1px solid ${w.tepi}`,
+          }}
+        >
+          Contoh untuk ilustrasi, bukan hasil penelitian lapangan.
         </div>
       </div>
 
-      {/* Atribut persona */}
+      {/* Kebutuhan */}
       <div
         style={{
           position: 'absolute',
-          left: PAD + 620,
+          left: PAD + 580,
           right: PAD,
-          top: 400,
+          top: 326,
         }}
       >
-        {ATRIBUT.map((a, i) => (
+        <div
+          style={{
+            fontFamily: f.isi,
+            fontSize: 20,
+            fontWeight: 700,
+            letterSpacing: '0.16em',
+            color: w.aksenMuda,
+            marginBottom: 22,
+            ...masuk(frame, 48),
+          }}
+        >
+          KEBUTUHAN YANG PALING RELEVAN
+        </div>
+
+        {KEBUTUHAN.map((k, i) => (
           <div
-            key={a.label}
+            key={k}
             style={{
               display: 'flex',
-              alignItems: 'flex-start',
-              padding: '36px 0',
+              alignItems: 'center',
+              gap: 22,
+              padding: '34px 0',
               borderBottom: `1px solid ${w.tepi}`,
-              ...masuk(frame, 60 + i * 16),
+              ...masuk(frame, 60 + i * 18),
             }}
           >
             <div
               style={{
-                width: 240,
-                fontFamily: f.isi,
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                border: `2px solid ${w.aksen}`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontFamily: f.judul,
                 fontSize: 22,
-                fontWeight: 700,
-                letterSpacing: '0.14em',
                 color: w.aksenMuda,
-                paddingTop: 6,
+                flexShrink: 0,
               }}
             >
-              {a.label.toUpperCase()}
+              {i + 1}
             </div>
             <div
               style={{
-                flex: 1,
                 fontFamily: f.isi,
-                fontSize: 32,
-                lineHeight: 1.4,
+                fontSize: 30,
+                lineHeight: 1.35,
                 color: w.teks,
               }}
             >
-              {a.isi}
+              {k}
             </div>
           </div>
         ))}

@@ -8,6 +8,7 @@ export const w = {
   aksen: '#C4183C',
   aksenMuda: '#F0A8B8',
   hijau: '#3FA96B',
+  kuning: '#D9A441',
 };
 
 export const f = {

@@ -4,7 +4,9 @@ Video penjelasan **masalah, target pengguna, dan cakupan** aplikasi LaporKampus.
 Dibuat dengan [Remotion](https://remotion.dev) (React → video) dan
 [edge-tts](https://github.com/rany2/edge-tts) untuk narasi Bahasa Indonesia.
 
-Hasil: `out/laporkampus-proposal.mp4` — 1920×1080, 30 fps, H.264 + AAC, 3 menit 29 detik.
+Hasil: `out/laporkampus-proposal.mp4` — 1920×1080, 30 fps, H.264 + AAC, 3 menit 18 detik.
+
+Riwayat perubahan naskah ada di [CATATAN-REVISI.md](CATATAN-REVISI.md).
 
 ## Kenapa audio dulu, video kemudian
 
@@ -21,15 +23,24 @@ bergeser.
 
 | No | Adegan | Durasi audio | Frame |
 | --- | --- | --- | --- |
-| 1 | Pembuka | 13,78 s | 426 |
-| 2 | Masalah (4 poin) | 51,41 s | 1555 |
-| 3 | Target pengguna | 29,21 s | 889 |
-| 4 | Cakupan | 32,76 s | 995 |
-| 5 | Alur aplikasi | 23,33 s | 712 |
-| 6 | Bukti pengujian | 18,74 s | 575 |
-| 7 | Rencana database | 23,42 s | 715 |
-| 8 | Penutup | 13,10 s | 406 |
-| | **Total** | **209,10 s** | **6273** |
+| 1 | Pembuka | 15,10 s | 465 |
+| 2 | Masalah — rumusan resmi + empat penjelasan | 50,04 s | 1514 |
+| 3 | Target pengguna — persona ilustratif + empat kebutuhan | 28,34 s | 863 |
+| 4 | Cakupan — termasuk dan di luar scope | 37,68 s | 1143 |
+| 5 | Alur aplikasi — empat halaman inti + Detail sebagai tambahan | 22,22 s | 679 |
+| 6 | Validasi & status — tiga tahap, data simulasi | 27,07 s | 825 |
+| 7 | Penutup | 14,62 s | 451 |
+| | **Total** | **198,00 s** | **5940** |
+
+## Prinsip naskah
+
+Tiga aturan yang dipegang supaya tidak ada klaim berlebih:
+
+1. **Masalah memakai rumusan yang sudah ditetapkan**, dan empat kartu penjelas
+   dinyatakan terang-terangan sebagai penjelasan awal — bukan hasil wawancara.
+2. **Persona diberi label ilustratif** di layar, bukan hanya di narasi.
+3. **Tidak ada angka yang tidak bisa dipertanggungjawabkan.** Jumlah kolom formulir
+   dan jumlah pengujian otomatis sengaja tidak disebut.
 
 ## Menjalankan ulang
 
@@ -67,13 +78,14 @@ Mengubah isi video:
   Chrome Headless Shell (± 150 MB).
 - **ffmpeg tidak perlu dipasang.** Remotion membawa ffmpeg sendiri untuk muxing audio.
 - **Tidak ada transisi CSS.** Semua gerak dihitung dari nomor frame lewat
-  `spring()` dan `interpolate()`, jadi hasil render selalu sama.
-- **Suara:** `id-ID-ArdiNeural`, kecepatan `-3%` supaya terdengar lebih tenang.
-  Alternatifnya `id-ID-GadisNeural`.
+  `spring()`, jadi hasil render selalu sama.
+- **Penyorotan kartu masalah mengikuti durasi adegan**, bukan angka tetap. Kalau narasi
+  berubah panjang, pembagian waktunya ikut menyesuaikan sendiri.
+- **Suara:** `id-ID-ArdiNeural`, kecepatan `-3%`. Alternatifnya `id-ID-GadisNeural`.
 - **Internet hanya dipakai saat `tts.py` berjalan.** Menonton dan render tidak butuh jaringan.
 
 ## Berkas yang tidak masuk Git
 
-`node_modules/`, `out/`, dan `public/audio/` diabaikan karena besar dan bisa
-dibangkitkan ulang. Berkas tangkapan layar di `public/shots/` disalin otomatis
-dari `../docs/` oleh `tts.py`.
+`node_modules/`, `out/`, `public/audio/`, dan `public/shots/` diabaikan karena besar dan
+bisa dibangkitkan ulang. Tangkapan layar di `public/shots/` disalin otomatis dari `../docs/`
+oleh `tts.py`.

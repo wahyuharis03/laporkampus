@@ -4,12 +4,11 @@ import {f, PAD, w} from '../theme';
 import {masuk} from '../components/anim';
 import {LabelBagian} from '../components/LabelBagian';
 
-const HALAMAN = [
-  {nama: 'Login', ket: 'Masuk dengan NIM'},
+const INTI = [
+  {nama: 'Login', ket: 'NIM dan password'},
   {nama: 'Beranda', ket: 'Ringkasan status'},
-  {nama: 'Form Laporan', ket: 'Enam kolom'},
-  {nama: 'Laporan Saya', ket: 'Daftar dan saring'},
-  {nama: 'Detail Laporan', ket: 'Rincian satu laporan'},
+  {nama: 'Form Laporan', ket: 'Validasi isian'},
+  {nama: 'Laporan Saya', ket: 'Daftar dan status'},
 ];
 
 export const Alur: React.FC = () => {
@@ -24,15 +23,15 @@ export const Alur: React.FC = () => {
           position: 'absolute',
           left: PAD,
           right: PAD,
-          top: 190,
+          top: 176,
           fontFamily: f.judul,
-          fontSize: 62,
+          fontSize: 58,
           lineHeight: 1.18,
           color: w.teks,
           ...masuk(frame, 8),
         }}
       >
-        Lima halaman, satu alur
+        Empat halaman inti, satu alur
       </div>
 
       <div
@@ -40,24 +39,24 @@ export const Alur: React.FC = () => {
           position: 'absolute',
           left: PAD,
           right: PAD,
-          top: 430,
+          top: 350,
           display: 'flex',
           alignItems: 'stretch',
         }}
       >
-        {HALAMAN.map((h, i) => (
+        {INTI.map((h, i) => (
           <React.Fragment key={h.nama}>
             <div
               style={{
                 flex: 1,
                 boxSizing: 'border-box',
-                padding: '44px 28px',
+                padding: '44px 24px',
                 backgroundColor: w.kartu,
                 border: `1px solid ${w.tepi}`,
                 borderTop: `4px solid ${w.aksen}`,
                 borderRadius: 12,
                 textAlign: 'center',
-                ...masuk(frame, 26 + i * 16),
+                ...masuk(frame, 26 + i * 18),
               }}
             >
               <div
@@ -75,7 +74,7 @@ export const Alur: React.FC = () => {
               <div
                 style={{
                   fontFamily: f.isi,
-                  fontSize: 29,
+                  fontSize: 30,
                   fontWeight: 700,
                   color: w.teks,
                   lineHeight: 1.25,
@@ -89,24 +88,23 @@ export const Alur: React.FC = () => {
                   fontSize: 21,
                   color: w.redup,
                   marginTop: 10,
-                  lineHeight: 1.4,
                 }}
               >
                 {h.ket}
               </div>
             </div>
 
-            {i < HALAMAN.length - 1 ? (
+            {i < INTI.length - 1 ? (
               <div
                 style={{
-                  width: 46,
+                  width: 48,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontFamily: f.isi,
                   fontSize: 30,
                   color: w.aksen,
-                  ...masuk(frame, 34 + i * 16),
+                  ...masuk(frame, 34 + i * 18),
                 }}
               >
                 →
@@ -116,47 +114,64 @@ export const Alur: React.FC = () => {
         ))}
       </div>
 
+      {/* Fitur tambahan, ditandai berbeda supaya tidak terbaca sebagai keharusan */}
       <div
         style={{
           position: 'absolute',
           left: PAD,
           right: PAD,
-          bottom: 132,
+          top: 660,
+          boxSizing: 'border-box',
+          padding: '30px 34px',
+          border: `1px dashed ${w.kuning}`,
+          borderRadius: 12,
           display: 'flex',
-          gap: 26,
-          ...masuk(frame, 120),
+          alignItems: 'center',
+          gap: 20,
+          ...masuk(frame, 110),
         }}
       >
         <div
           style={{
-            flex: 1,
-            padding: '26px 32px',
-            backgroundColor: w.kartu,
-            border: `1px solid ${w.tepi}`,
-            borderRadius: 10,
             fontFamily: f.isi,
-            fontSize: 25,
-            color: w.teks,
+            fontSize: 17,
+            fontWeight: 700,
+            letterSpacing: '0.14em',
+            color: w.kuning,
+            border: `1px solid ${w.kuning}`,
+            borderRadius: 4,
+            padding: '5px 10px',
+            flexShrink: 0,
           }}
         >
-          <span style={{color: w.aksenMuda, fontWeight: 700}}>Ponsel</span>
-          &nbsp;&nbsp;navigasi di bawah, lebar di bawah 600 px
+          TAMBAHAN
         </div>
         <div
           style={{
-            flex: 1,
-            padding: '26px 32px',
-            backgroundColor: w.kartu,
-            border: `1px solid ${w.tepi}`,
-            borderRadius: 10,
             fontFamily: f.isi,
             fontSize: 25,
-            color: w.teks,
+            color: '#CFC8D6',
+            lineHeight: 1.4,
           }}
         >
-          <span style={{color: w.aksenMuda, fontWeight: 700}}>Layar lebar</span>
-          &nbsp;&nbsp;navigasi berpindah ke samping, 600 px ke atas
+          <span style={{color: w.teks, fontWeight: 700}}>Detail Laporan</span>
+          &nbsp;&nbsp;prioritas Should, bukan keharusan utama pada tahap ini
         </div>
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          left: PAD,
+          right: PAD,
+          bottom: 76,
+          fontFamily: f.isi,
+          fontSize: 22,
+          color: w.redup,
+          ...masuk(frame, 140),
+        }}
+      >
+        Navigasi berada di bawah pada ponsel, dan berpindah ke samping pada layar lebar.
       </div>
     </AbsoluteFill>
   );

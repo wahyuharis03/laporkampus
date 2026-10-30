@@ -3,6 +3,10 @@
 **Remotion + TTS gratis (edge-tts)**
 Disusun 30 Oktober 2026 · Wahyu Hari Santosa · 23.01.55.0003
 
+> ⚠️ **Dokumen ini adalah rencana awal, bukan naskah final.** Naskah narasi di Bab 5
+> sudah diganti setelah masukan pada bagian masalah, target, dan scope. Naskah yang
+> berlaku ada di `narasi.json`, dan daftar perubahannya di `CATATAN-REVISI.md`.
+
 ---
 
 ## 1. Tujuan
