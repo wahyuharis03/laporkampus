@@ -1,17 +1,41 @@
-# Video Proposal LaporKampus
+# Video Presentasi UTS LaporKampus
 
-Video penjelasan **masalah, target pengguna, dan cakupan** aplikasi LaporKampus.
-Dibuat dengan [Remotion](https://remotion.dev) (React → video) dan
-[edge-tts](https://github.com/rany2/edge-tts) untuk narasi Bahasa Indonesia.
+Video presentasi UTS yang mengikuti alur brief: pembuka, masalah dan pengguna,
+kebutuhan dan prioritas, rancangan, demo aplikasi yang berjalan, lalu rencana
+teknis dan penutup.
 
-Hasil: `out/laporkampus-proposal.mp4` — 1920×1080, 30 fps, H.264 + AAC, 3 menit 18 detik.
+Dibuat dengan [Remotion](https://remotion.dev) (React → video), narasi
+[edge-tts](https://github.com/rany2/edge-tts), dan perekaman demo memakai
+[Playwright](https://playwright.dev) yang menjalankan aplikasi Flutter di Chrome.
 
-**Unduh:** <https://github.com/wahyuharis03/laporkampus/releases/download/video-proposal-v1/laporkampus-proposal.mp4>
+Hasil: `out/laporkampus-uts.mp4` — 1920×1080, 30 fps, H.264 + AAC, **7 menit 30 detik**.
 
-Berkas video tidak disimpan di dalam repository (21 MB dan bisa dibangkitkan ulang),
-melainkan dilampirkan sebagai aset Release `video-proposal-v1`.
+**Unduh:** <https://github.com/wahyuharis03/laporkampus/releases/download/video-uts-final/laporkampus-uts.mp4>
 
-Riwayat perubahan naskah ada di [CATATAN-REVISI.md](CATATAN-REVISI.md).
+Berkas video tidak disimpan di dalam repository, melainkan dilampirkan sebagai
+aset Release `video-uts-final`. Riwayat perubahan naskah ada di
+[CATATAN-REVISI.md](CATATAN-REVISI.md).
+
+## Struktur adegan
+
+| No | Adegan | Durasi audio |
+| --- | --- | --- |
+| 1 | Pembuka — identitas dan judul | 22,70 s |
+| 2 | Masalah — rumusan + empat penjelasan | 43,54 s |
+| 3 | Pengguna — persona ilustratif + kebutuhan | 33,46 s |
+| 4 | Kebutuhan — lima user story dan prioritas | 44,69 s |
+| 5 | Rancangan — user flow dan sitemap | 53,57 s |
+| 6 | Wireframe — lima frame dan implementasinya | 24,10 s |
+| 7 | Demo — Login | 19,34 s |
+| 8 | Demo — Beranda | 13,01 s |
+| 9 | Demo — Form Laporan | 19,87 s |
+| 10 | Demo — validasi menolak isian salah | 25,44 s |
+| 11 | Demo — kirim dan simpan data | 23,40 s |
+| 12 | Demo — daftar dan keadaan kosong | 18,26 s |
+| 13 | Demo — detail laporan | 14,76 s |
+| 14 | Rencana teknis — stack dan Firestore | 60,12 s |
+| 15 | Penutup — rencana 9–15, kendala, pelajaran | 27,17 s |
+| | **Total** | **450,4 s (7:30)** |
 
 ## Kenapa audio dulu, video kemudian
 
@@ -20,32 +44,32 @@ Panjang setiap adegan **ditentukan oleh durasi audionya**, bukan dikira-kira.
 lalu menulis `src/timings.ts`. Remotion membaca berkas itu untuk menentukan
 `durationInFrames` tiap `Series.Sequence`.
 
-Akibatnya: kalau teks narasi diubah, jalankan ulang `tts.py`, dan video menyesuaikan
-sendiri tanpa menggeser timing secara manual. Tidak ada risiko audio dan gambar
-bergeser.
+Kalau teks narasi diubah, jalankan ulang `tts.py`, dan video menyesuaikan sendiri
+tanpa menggeser timing secara manual.
 
-## Struktur adegan
+## Cara demo direkam
 
-| No | Adegan | Durasi audio | Frame |
-| --- | --- | --- | --- |
-| 1 | Pembuka | 15,10 s | 465 |
-| 2 | Masalah — rumusan resmi + empat penjelasan | 50,04 s | 1514 |
-| 3 | Target pengguna — persona ilustratif + empat kebutuhan | 28,34 s | 863 |
-| 4 | Cakupan — termasuk dan di luar scope | 37,68 s | 1143 |
-| 5 | Alur aplikasi — empat halaman inti + Detail sebagai tambahan | 22,22 s | 679 |
-| 6 | Validasi & status — tiga tahap, data simulasi | 27,07 s | 825 |
-| 7 | Penutup | 14,62 s | 451 |
-| | **Total** | **198,00 s** | **5940** |
+Demo bukan slide dan bukan animasi tiruan. Aplikasi Flutter dijalankan sebagai web,
+lalu Playwright mengisi form, menekan tombol, dan merekam layarnya:
 
-## Prinsip naskah
+```bash
+# 1. Bangun dan sajikan aplikasi
+flutter build web --release
+python -m http.server 8099 --bind 127.0.0.1 --directory ../build/web
 
-Tiga aturan yang dipegang supaya tidak ada klaim berlebih:
+# 2. Rekam demo (butuh Chrome dan `npx playwright install ffmpeg`)
+node scripts/rekam-demo.mjs
 
-1. **Masalah memakai rumusan yang sudah ditetapkan**, dan empat kartu penjelas
-   dinyatakan terang-terangan sebagai penjelasan awal — bukan hasil wawancara.
-2. **Persona diberi label ilustratif** di layar, bukan hanya di narasi.
-3. **Tidak ada angka yang tidak bisa dipertanggungjawabkan.** Jumlah kolom formulir
-   dan jumlah pengujian otomatis sengaja tidak disebut.
+# 3. Potong per bab sesuai durasi narasi
+python scripts/potong-demo.py
+```
+
+`rekam-demo.mjs` mencatat penanda waktu tiap bab ke `out/demo/marks.json`.
+`potong-demo.py` memotong rekaman pada penanda itu, menghitung sendiri jeda awal
+video, lalu mengubahnya menjadi MP4 30 fps. Hasilnya disalin ke `public/demo/`.
+
+Kursor pada rekaman adalah elemen DOM yang disuntikkan skrip, supaya gerakan mouse
+terlihat. Aplikasi tetap berjalan seperti biasa.
 
 ## Menjalankan ulang
 
@@ -53,44 +77,47 @@ Prasyarat: Node.js 18+, Python 3.10+, Chrome terpasang, dan koneksi internet
 (hanya untuk membangkitkan audio).
 
 ```bash
-# 1. Dependensi
 npm install
 
-# 2. Narasi -> audio -> timing
-#    (butuh: pip install edge-tts mutagen)
+# Narasi -> audio -> timing
+# (butuh: pip install edge-tts mutagen)
 python scripts/tts.py
 
-# 3. Pratinjau di Remotion Studio
-npm run studio
-
-# 4. Render final
-npm run render
+npm run studio     # pratinjau
+npm run render     # render final
 ```
 
 Mengubah isi video:
 
 | Yang ingin diubah | Berkas |
 | --- | --- |
-| Kalimat narasi, suara, kecepatan bicara | `narasi.json` → jalankan `python scripts/tts.py` |
+| Kalimat narasi, suara, kecepatan bicara | `narasi.json` → `python scripts/tts.py` |
 | Warna, font, jarak | `src/theme.ts` |
 | Isi dan tata letak satu adegan | `src/scenes/<Nama>.tsx` |
-| Urutan adegan | `src/Video.tsx` (peta `PETA`) |
+| Urutan adegan | `src/Video.tsx` |
+| Alur demo yang direkam | `scripts/rekam-demo.mjs` |
+
+## Prinsip naskah
+
+1. **Masalah memakai rumusan yang sudah ditetapkan**, dan empat kartu penjelas
+   dinyatakan terang-terangan sebagai penjelasan awal — bukan hasil wawancara.
+2. **Persona diberi label ilustratif** di layar, bukan hanya di narasi.
+3. **Tidak ada angka yang tidak bisa dipertanggungjawabkan.** Jumlah kolom dan
+   jumlah pengujian hanya disebut bila sesuai dengan kode.
+4. **Istilah status sama dengan aplikasi:** Menunggu, Diproses, Selesai.
 
 ## Catatan teknis
 
 - **Chrome tidak diunduh ulang.** `remotion.config.ts` menunjuk ke Chrome yang sudah
-  terpasang lewat `Config.setBrowserExecutable`, jadi Remotion tidak mengunduh
-  Chrome Headless Shell (± 150 MB).
-- **ffmpeg tidak perlu dipasang.** Remotion membawa ffmpeg sendiri untuk muxing audio.
-- **Tidak ada transisi CSS.** Semua gerak dihitung dari nomor frame lewat
-  `spring()`, jadi hasil render selalu sama.
-- **Penyorotan kartu masalah mengikuti durasi adegan**, bukan angka tetap. Kalau narasi
-  berubah panjang, pembagian waktunya ikut menyesuaikan sendiri.
-- **Suara:** `id-ID-ArdiNeural`, kecepatan `-3%`. Alternatifnya `id-ID-GadisNeural`.
-- **Internet hanya dipakai saat `tts.py` berjalan.** Menonton dan render tidak butuh jaringan.
+  terpasang lewat `Config.setBrowserExecutable`.
+- **ffmpeg tidak perlu dipasang.** Remotion membawa ffmpeg sendiri untuk muxing audio;
+  skrip pemotong memakai biner yang sama.
+- **Tidak ada transisi CSS.** Semua gerak dihitung dari nomor frame lewat `spring()`.
+- **Suara:** `id-ID-ArdiNeural`, kecepatan `-3%`.
+- **Internet hanya dipakai saat `tts.py` berjalan.**
 
 ## Berkas yang tidak masuk Git
 
-`node_modules/`, `out/`, `public/audio/`, dan `public/shots/` diabaikan karena besar dan
-bisa dibangkitkan ulang. Tangkapan layar di `public/shots/` disalin otomatis dari `../docs/`
-oleh `tts.py`.
+`node_modules/`, `out/`, `public/audio/`, `public/shots/`, dan `public/demo/`
+diabaikan karena besar dan bisa dibangkitkan ulang. Tangkapan layar di
+`public/shots/` disalin otomatis dari `../docs/` oleh `tts.py`.

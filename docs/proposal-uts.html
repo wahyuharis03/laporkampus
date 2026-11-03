@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Proposal UTS — LaporKampus</title>
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 9.2pt;
+    line-height: 1.5;
+    color: #24262f;
+  }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; margin: 0; }
+  h1 { font-size: 28pt; line-height: 1.05; letter-spacing: -0.01em; }
+  h2 { font-size: 14.5pt; color: #800020; margin: 0 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 10.6pt; margin: 4mm 0 1.6mm; color: #24262f; page-break-after: avoid; }
+  p { margin: 0 0 2.4mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin-bottom: 1.2mm; }
+  a { color: #800020; text-decoration: none; }
+  .kecil { font-size: 8.2pt; color: #6b7280; }
+  .muted { color: #6b7280; }
+  .maroon { color: #800020; }
+  .tebal { font-weight: 700; }
+
+  .halaman { page-break-after: auto; }
+  .halaman + .halaman { margin-top: 9mm; }
+  .halaman.pecah { page-break-before: always; margin-top: 0; }
+  table.data, .kotak, .kartu-persona, .angka, .wire, .alur, pre { page-break-inside: avoid; }
+
+  .kepala {
+    break-after: avoid; page-break-after: avoid;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    border-bottom: 1.2pt solid #800020; padding-bottom: 2mm; margin-bottom: 6mm;
+  }
+  .kepala .nomor { font-size: 8pt; letter-spacing: 0.18em; color: #800020; font-weight: 700; }
+  .kepala .nama { font-size: 8pt; letter-spacing: 0.12em; color: #9aa0aa; }
+
+  .sampul { padding-top: 2mm; }
+  .sampul .kicker { font-size: 8.5pt; letter-spacing: 0.22em; color: #800020; font-weight: 700; }
+  .sampul .sub { font-size: 11.5pt; color: #4b4f5a; margin-top: 4mm; line-height: 1.45; }
+  .sampul .garis { width: 34mm; height: 1.2mm; background: #800020; margin: 5mm 0; }
+  .identitas { width: 100%; border-collapse: collapse; margin-top: 4mm; }
+  .identitas td { padding: 2.2mm 0; border-bottom: 0.5pt solid #e2e4e9; font-size: 9.5pt; }
+  .identitas td:first-child { width: 34mm; color: #6b7280; }
+  .sampul .layar { display: flex; gap: 4mm; margin-top: 7mm; align-items: flex-start; }
+  .sampul .layar img { width: 24%; border: 0.5pt solid #d9dee7; border-radius: 2mm; }
+
+  table.data { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 8.4pt; }
+  table.data th {
+    background: #800020; color: #fff; text-align: left; font-weight: 600;
+    padding: 1.5mm 2mm; border: 0.5pt solid #800020; font-size: 8pt;
+    letter-spacing: 0.02em;
+  }
+  table.data td { padding: 1.5mm 2mm; border: 0.5pt solid #dfe2e8; vertical-align: top; }
+  table.data tr:nth-child(even) td { background: #fafafa; }
+  table.data td.kode { font-weight: 700; white-space: nowrap; color: #800020; }
+
+  .kotak {
+    border: 0.6pt solid #e2c6cd; background: #fdf6f8;
+    border-left: 1.2mm solid #800020; padding: 3mm 4mm; margin: 3mm 0 4mm;
+  }
+  .kotak p:last-child { margin-bottom: 0; }
+  .kotak.kuning { border-color: #eadfc6; background: #fdf9ef; border-left-color: #b8860b; }
+  .kotak.abu { border-color: #e1e3e8; background: #f7f8fa; border-left-color: #9aa0aa; }
+
+  .dua { display: flex; gap: 6mm; }
+  .dua > div { flex: 1; }
+
+  .kartu-persona {
+    border: 0.6pt solid #e1e3e8; border-radius: 2mm; padding: 4mm; background: #fff;
+  }
+  .avatar {
+    width: 14mm; height: 14mm; border-radius: 7mm; background: #800020; color: #fff;
+    font-family: Georgia, serif; font-size: 18pt; display: flex; align-items: center;
+    justify-content: center; float: left; margin-right: 4mm;
+  }
+  .label {
+    display: inline-block; padding: 0.8mm 2.4mm; border-radius: 4mm;
+    border: 0.6pt solid #b8860b; color: #8a6508; font-size: 7.2pt; letter-spacing: 0.08em;
+    font-weight: 700;
+  }
+
+  .alur { display: flex; align-items: center; flex-wrap: wrap; gap: 2mm; margin: 3mm 0 5mm; }
+  .simpul {
+    border: 0.7pt solid #cfd3da; border-radius: 2mm; padding: 2mm 3mm; background: #fff;
+    font-size: 8.2pt; text-align: center; min-width: 24mm;
+  }
+  .simpul.utama { border-color: #800020; background: #fdf6f8; }
+  .tanda { color: #9aa0aa; font-size: 10pt; }
+  .cabang { margin-left: 12mm; }
+
+  .peta { width: 100%; border-collapse: separate; border-spacing: 2mm 0; margin: 2mm 0 4mm; }
+  .peta td {
+    border: 0.6pt solid #dfe2e8; border-top: 1mm solid #800020; border-radius: 1.5mm;
+    padding: 3mm; vertical-align: top; width: 20%; font-size: 8.2pt;
+  }
+  .peta .kode { font-size: 7pt; letter-spacing: 0.1em; color: #800020; font-weight: 700; }
+  .peta .judul { font-weight: 700; font-size: 9pt; margin: 1mm 0; }
+
+  .wire { display: flex; gap: 3mm; margin: 2mm 0 4mm; }
+  .wire figure { margin: 0; flex: 1; }
+  .wire img { width: 100%; border: 0.5pt solid #d9dee7; border-radius: 1.5mm; }
+  .wire figcaption { font-size: 7.2pt; color: #6b7280; margin-top: 1.5mm; }
+
+  .bingkai-wire {
+    border: 0.8pt solid #b9bec8; border-radius: 1.5mm; height: 44mm; padding: 2mm;
+    background: #fff;
+  }
+  .garis-w { background: #e3e6eb; border-radius: 0.6mm; height: 1.6mm; margin-bottom: 1.4mm; }
+  .garis-w.gelap { background: #c9ced8; }
+  .kotak-w { border: 0.5pt solid #d5d9e0; border-radius: 0.8mm; height: 8mm; margin-bottom: 1.4mm; }
+  .tombol-w { background: #e8b6c2; border-radius: 0.8mm; height: 4mm; margin-top: 2mm; }
+
+  pre {
+    font-family: Consolas, "Courier New", monospace; font-size: 7.6pt; line-height: 1.45;
+    background: #f7f8fa; border: 0.5pt solid #e1e3e8; border-radius: 1.5mm;
+    padding: 3mm 4mm; margin: 2mm 0 4mm; white-space: pre-wrap;
+  }
+  code { font-family: Consolas, "Courier New", monospace; font-size: 8.4pt; background: #f4f5f7; padding: 0 1mm; }
+
+  .tumpuk { display: flex; flex-wrap: wrap; gap: 2mm; margin: 2mm 0 4mm; }
+  .chip {
+    border: 0.6pt solid #dfe2e8; border-radius: 4mm; padding: 1mm 3mm; font-size: 8pt;
+    background: #fff;
+  }
+  .chip b { color: #800020; }
+
+  .angka { display: flex; gap: 5mm; margin: 3mm 0 4mm; }
+  .angka div { flex: 1; border: 0.6pt solid #e1e3e8; border-radius: 2mm; padding: 3mm; }
+  .angka .n { font-family: Georgia, serif; font-size: 18pt; color: #800020; line-height: 1; }
+  .angka .k { font-size: 7.6pt; color: #6b7280; margin-top: 1mm; }
+
+  .kaki { margin-top: 6mm; border-top: 0.5pt solid #e1e3e8; padding-top: 2mm; font-size: 7.4pt; color: #9aa0aa; }
+  .hindar { page-break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<!-- ============ SAMPUL ============ -->
+<section class="halaman sampul">
+  <div class="kepala">
+    <div class="nomor">PROPOSAL PROJECT UTS</div>
+    <div class="nama">MOBILE AND WEB APPLICATION DEVELOPMENT · A1</div>
+  </div>
+
+  <div class="kicker">UNIVERSITAS STIKUBANK · PROGRAM STUDI SISTEM INFORMASI</div>
+  <h1 style="margin-top:6mm">LaporKampus</h1>
+  <div class="sub">
+    Aplikasi pelaporan kerusakan fasilitas kampus:<br>
+    satu formulir, satu daftar, status yang bisa dipantau.
+  </div>
+  <div class="garis"></div>
+
+  <table class="identitas">
+    <tr><td>Nama</td><td class="tebal">Wahyu Hari Santosa</td></tr>
+    <tr><td>NIM</td><td class="tebal">23.01.55.0003</td></tr>
+    <tr><td>Kelas</td><td class="tebal">A1</td></tr>
+    <tr><td>Mata kuliah</td><td>Mobile and Web Application Development</td></tr>
+    <tr><td>Semester</td><td>Ganjil 2026/2027</td></tr>
+    <tr><td>Dosen pengampu</td><td>Jeffri Alfa Razaq &amp; Dwi Budi Santoso</td></tr>
+    <tr><td>Repository</td><td>github.com/wahyuharis03/laporkampus</td></tr>
+    <tr><td>Desain Figma</td><td>Figma Make — wireframe Minggu 4 (tautan pada bagian 5)</td></tr>
+  </table>
+
+  <div class="layar">
+    <img src="screenshot-login.png" alt="Halaman login">
+    <img src="screenshot-beranda.png" alt="Halaman beranda">
+    <img src="screenshot-form-laporan.png" alt="Form laporan">
+  </div>
+  <p class="kecil" style="margin-top:3mm">
+    Tangkapan layar aplikasi yang berjalan (Flutter Web, Chrome). Data pada layar
+    adalah data simulasi.
+  </p>
+
+</section>
+
+<!-- ============ 1. MASALAH ============ -->
+<section class="halaman">
+  <div class="kepala"><div class="nomor">01 / MASALAH</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Masalah yang diselesaikan</h2>
+
+  <div class="kotak">
+    <p class="tebal" style="margin-bottom:1.5mm">Problem statement</p>
+    <p style="margin-bottom:0">
+      Mahasiswa mengalami kesulitan menyampaikan dan memantau pengaduan kerusakan
+      fasilitas kampus ketika menemukan fasilitas yang rusak atau bermasalah.
+      Akibatnya, laporan sulit dicatat dan statusnya sulit diketahui.
+    </p>
+  </div>
+
+  <p>
+    Keluhan tentang fasilitas kampus umumnya berpindah lewat grup chat angkatan,
+    pesan pribadi ke pengurus, atau disampaikan lisan saat bertemu petugas. Tidak ada
+    satu tempat yang menampung seluruh laporan, sehingga laporan yang sudah masuk
+    sulit dihitung dan yang belum ditangani sulit ditemukan.
+  </p>
+
+  <p>
+    Bagi mahasiswa, masalah kedua adalah ketiadaan status. Setelah melapor, ia tidak
+    tahu apakah laporannya sudah dibaca, sedang dikerjakan, atau selesai. Ketidakpastian
+    ini membuat laporan dikirim berulang kali melalui saluran yang berbeda. Bagi tim
+    Sarpras, informasi yang masuk tidak seragam: ada yang menulis lokasi secara umum,
+    ada yang menyebut ruang secara spesifik, dan tingkat kerusakannya pun tidak
+    terukur. Akibatnya prioritas penanganan sulit ditentukan.
+  </p>
+
+  <h3>Empat penjelasan awal</h3>
+  <table class="data">
+    <tr><th style="width:8mm">#</th><th style="width:44mm">Gejala</th><th>Penjelasan</th></tr>
+    <tr><td>1</td><td>Kanal tersebar</td><td>Laporan berpindah lewat grup chat, lisan, dan pesan pribadi, sehingga tidak terkumpul di satu tempat.</td></tr>
+    <tr><td>2</td><td>Status tak terlihat</td><td>Mahasiswa tidak tahu laporannya sudah dibaca, sedang ditangani, atau selesai.</td></tr>
+    <tr><td>3</td><td>Informasi tidak seragam</td><td>Lokasi dan jenis kerusakan ditulis dengan cara berbeda, sehingga sulit ditindaklanjuti.</td></tr>
+    <tr><td>4</td><td>Riwayat tidak tersimpan</td><td>Tidak ada catatan yang bisa ditelusuri kembali ketika masalah yang sama terulang.</td></tr>
+  </table>
+
+  <div class="kotak kuning">
+    <p class="tebal" style="margin-bottom:1mm">Catatan kejujuran data</p>
+    <p style="margin-bottom:0">
+      Empat gejala di atas adalah penjelasan awal yang disusun dari pengamatan
+      sehari-hari, <span class="tebal">bukan hasil wawancara atau observasi lapangan</span>.
+      Validasi ke pengguna dan tim Sarpras direncanakan setelah UTS. Karena itu aplikasi
+      ini diposisikan sebagai purwarupa alur, bukan solusi yang sudah terbukti.
+    </p>
+  </div>
+
+  <h3>Mengapa penting</h3>
+  <p>
+    Fasilitas yang rusak dan tidak tercatat membuat kegiatan perkuliahan terganggu:
+    ruang kelas gelap, jaringan terputus, atau kursi yang tidak aman dipakai. Dengan
+    satu kanal pencatatan dan status yang terbuka, mahasiswa tahu posisi laporannya dan
+    tim Sarpras punya daftar kerja yang bisa diprioritaskan.
+  </p>
+
+  <div class="angka">
+    <div><div class="n">3</div><div class="k">halaman Must yang harus terhubung</div></div>
+    <div><div class="n">6</div><div class="k">kolom formulir dengan validasi</div></div>
+    <div><div class="n">3</div><div class="k">status: Menunggu, Diproses, Selesai</div></div>
+    <div><div class="n">5</div><div class="k">user story, 3 di antaranya Must</div></div>
+  </div>
+
+  <h3>Ruang lingkup</h3>
+  <p>
+    Proyek ini berfokus pada alur mahasiswa: masuk, melaporkan, melihat daftar, dan
+    membuka detail laporan. Yang <span class="tebal">tidak</span> termasuk: akun dan
+    dashboard petugas Sarpras, notifikasi otomatis, peta lokasi, unggah foto sebagai
+    fitur wajib, dan integrasi basis data produksi pada tahap UTS.
+  </p>
+
+</section>
+
+<!-- ============ 2. PERSONA & USER STORY ============ -->
+<section class="halaman pecah">
+  <div class="kepala"><div class="nomor">02 / PENGGUNA</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Persona pengguna utama</h2>
+
+  <div class="dua">
+    <div class="kartu-persona">
+      <div class="avatar">R</div>
+      <div style="overflow:hidden">
+        <div style="font-size:12pt;font-weight:700">Rani Puspita</div>
+        <div class="kecil">20 tahun · Semester 4 · Sistem Informasi</div>
+      </div>
+      <div style="clear:both;height:3mm"></div>
+      <p style="font-family:Georgia,serif;font-style:italic;font-size:10.5pt;color:#3b3d47">
+        “Saya cuma mau lapor sekali, lalu tahu kapan diperbaiki. Tidak perlu chat
+        dosen atau menunggu di ruang Sarpras.”
+      </p>
+      <span class="label">PERSONA ILUSTRATIF</span>
+      <p class="kecil" style="margin-top:2.5mm;margin-bottom:0">
+        Disusun untuk menggambarkan pengguna utama, bukan hasil penelitian lapangan.
+      </p>
+    </div>
+
+    <div>
+      <h3>Konteks penggunaan</h3>
+      <p>
+        Rani menemukan kursi patah di ruang B105 saat menunggu kuliah. Ia melapor
+        sambil berdiri, memakai ponsel, dan punya waktu kurang dari satu menit sebelum
+        kelas dimulai. Ia tidak ingin mengisi formulir panjang atau membuat akun baru.
+      </p>
+      <h3>Kebutuhan utama</h3>
+      <ol>
+        <li>Melapor dalam satu menit, langsung dari ponsel.</li>
+        <li>Tahu status laporan tanpa harus bertanya ulang.</li>
+        <li>Melihat riwayat laporan yang pernah dikirim.</li>
+        <li>Tidak perlu memasang aplikasi baru.</li>
+      </ol>
+      <h3>Pengguna lain</h3>
+      <p>
+        Petugas Sarpras adalah penerima laporan, tetapi belum menjadi pengguna aplikasi
+        pada tahap ini. Perannya muncul pada rancangan Firestore sebagai pihak yang
+        mengubah status.
+      </p>
+    </div>
+  </div>
+
+  <h2 style="margin-top:7mm">User story</h2>
+  <p class="kecil" style="margin-bottom:2mm">
+    Format: sebagai mahasiswa, saya ingin …, agar …. Setiap user story punya kriteria
+    penerimaan yang dapat diuji pada purwarupa.
+  </p>
+
+  <table class="data">
+    <tr>
+      <th style="width:13mm">ID</th>
+      <th>User story</th>
+      <th style="width:20mm">Prioritas</th>
+      <th style="width:58mm">Kriteria penerimaan</th>
+    </tr>
+    <tr>
+      <td class="kode">US-01</td>
+      <td>Sebagai mahasiswa, saya ingin masuk memakai NIM dan password agar laporan terhubung dengan identitas saya.</td>
+      <td>Must</td>
+      <td>NIM dan password kosong ditolak dengan pesan; isian benar membuka Beranda.</td>
+    </tr>
+    <tr>
+      <td class="kode">US-02</td>
+      <td>Sebagai mahasiswa, saya ingin melaporkan kerusakan lewat satu formulir agar tidak perlu menghubungi banyak pihak.</td>
+      <td>Must</td>
+      <td>Enam kolom wajib; isian salah ditolak dengan pesan di dekat kolom; isian benar menampilkan SnackBar hijau.</td>
+    </tr>
+    <tr>
+      <td class="kode">US-03</td>
+      <td>Sebagai mahasiswa, saya ingin melihat daftar laporan dan statusnya agar tahu laporan mana yang belum ditangani.</td>
+      <td>Must</td>
+      <td>Laporan baru tampil di daftar; status Menunggu/Diproses/Selesai terlihat; keadaan kosong dijelaskan.</td>
+    </tr>
+    <tr>
+      <td class="kode">US-04</td>
+      <td>Sebagai mahasiswa, saya ingin membuka detail laporan agar bisa memeriksa isi dan riwayatnya.</td>
+      <td>Should</td>
+      <td>Menekan kartu laporan membuka halaman detail berisi seluruh isian; tombol kembali bekerja.</td>
+    </tr>
+    <tr>
+      <td class="kode">US-05</td>
+      <td>Sebagai mahasiswa, saya ingin menyaring laporan menurut status agar daftar tetap mudah dibaca.</td>
+      <td>Should</td>
+      <td>Filter Semua/Menunggu/Diproses/Selesai mengubah daftar; filter tanpa data menampilkan keadaan kosong.</td>
+    </tr>
+  </table>
+
+  <div class="kotak abu">
+    <p style="margin-bottom:0">
+      <span class="tebal">Mengapa tiga yang pertama Must?</span> Tanpa login, identitas
+      pelapor tidak jelas. Tanpa formulir, tidak ada data kerusakan yang bisa ditindaklanjuti.
+      Tanpa daftar dan status, masalah “status tidak terlihat” tidak terselesaikan.
+      US-04 dan US-05 mempercepat pemantauan, tetapi alur inti tetap berjalan tanpa keduanya.
+    </p>
+  </div>
+
+</section>
+
+<!-- ============ 3. KEBUTUHAN FUNGSIONAL ============ -->
+<section class="halaman">
+  <div class="kepala"><div class="nomor">03 / KEBUTUHAN</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Kebutuhan fungsional dan prioritas</h2>
+  <p class="kecil" style="margin-bottom:2mm">
+    Prioritas memakai MoSCoW. Must = tanpa ini masalah utama belum selesai.
+    Should = penting, tetapi bukan penghalang alur inti. Could = tambahan bila waktu cukup.
+  </p>
+
+  <table class="data">
+    <tr><th style="width:13mm">ID</th><th>Kebutuhan</th><th style="width:18mm">Prioritas</th><th style="width:52mm">Keterangan / status</th></tr>
+    <tr><td class="kode">F-01</td><td>Login memakai NIM dan password, menolak kolom kosong</td><td>Must</td><td>Sudah berjalan (simulasi, belum Firebase Auth)</td></tr>
+    <tr><td class="kode">F-02</td><td>Beranda menampilkan sapaan, ringkasan status, dan laporan terbaru</td><td>Must</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-03</td><td>Form laporan enam kolom dengan validasi per kolom</td><td>Must</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-04</td><td>Pesan status SnackBar: merah bila gagal, hijau bila tersimpan</td><td>Must</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-05</td><td>Daftar laporan dengan status dan keadaan kosong</td><td>Must</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-06</td><td>Detail laporan berisi seluruh isian</td><td>Should</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-07</td><td>Filter laporan menurut status</td><td>Should</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-08</td><td>Navigasi responsif: NavigationBar menjadi NavigationRail pada layar lebar</td><td>Should</td><td>Sudah berjalan</td></tr>
+    <tr><td class="kode">F-09</td><td>Penyimpanan permanen di Cloud Firestore</td><td>Must (UAS)</td><td>Rencana Pertemuan 10</td></tr>
+    <tr><td class="kode">F-10</td><td>Unggah foto kerusakan</td><td>Could</td><td>Rencana Pertemuan 11</td></tr>
+    <tr><td class="kode">F-11</td><td>Dashboard petugas Sarpras dan perubahan status</td><td>Could</td><td>Di luar cakupan UTS</td></tr>
+    <tr><td class="kode">F-12</td><td>Notifikasi otomatis saat status berubah</td><td>Could</td><td>Di luar cakupan UTS</td></tr>
+  </table>
+
+  <h3>Aturan validasi formulir</h3>
+  <table class="data">
+    <tr><th style="width:40mm">Kolom</th><th style="width:30mm">Jenis input</th><th>Aturan</th><th style="width:52mm">Pesan kesalahan</th></tr>
+    <tr><td>Lokasi fasilitas</td><td>Teks</td><td>Wajib; minimal 5 karakter</td><td>Lokasi fasilitas wajib diisi / Lokasi minimal 5 karakter</td></tr>
+    <tr><td>Kategori kerusakan</td><td>Dropdown</td><td>Wajib dipilih (5 pilihan)</td><td>Kategori wajib dipilih</td></tr>
+    <tr><td>Tingkat urgensi</td><td>Dropdown</td><td>Wajib dipilih: Rendah, Sedang, Tinggi</td><td>Tingkat urgensi wajib dipilih</td></tr>
+    <tr><td>Tanggal kejadian</td><td>Date picker</td><td>Wajib; 30 hari terakhir sampai hari ini</td><td>Tanggal wajib diisi</td></tr>
+    <tr><td>Jumlah unit rusak</td><td>Angka</td><td>Wajib; bilangan bulat; 1–50</td><td>Jumlah unit tidak boleh nol / Maksimal 50 unit per laporan</td></tr>
+    <tr><td>Deskripsi kerusakan</td><td>Teks panjang</td><td>Wajib; minimal 15 karakter; maksimal 200</td><td>Deskripsi minimal 15 karakter</td></tr>
+  </table>
+
+  <h3>Tabel uji formulir</h3>
+  <p class="kecil" style="margin-bottom:2mm">
+    Pengujian dilakukan manual pada aplikasi yang berjalan di Chrome, ditambah tujuh
+    widget test otomatis untuk navigasi, validasi, dan tata letak layar lebar.
+  </p>
+  <table class="data">
+    <tr><th style="width:10mm">#</th><th style="width:44mm">Kasus</th><th>Masukan</th><th style="width:56mm">Hasil yang diharapkan</th><th style="width:18mm">Hasil</th></tr>
+    <tr><td>1</td><td>Semua kolom kosong</td><td>Tekan Kirim tanpa isian</td><td>Enam pesan kesalahan muncul; SnackBar merah</td><td>Sesuai</td></tr>
+    <tr><td>2</td><td>Lokasi terlalu pendek</td><td>“A”</td><td>“Lokasi minimal 5 karakter”</td><td>Sesuai</td></tr>
+    <tr><td>3</td><td>Jumlah melebihi batas</td><td>60</td><td>“Maksimal 50 unit per laporan”</td><td>Sesuai</td></tr>
+    <tr><td>4</td><td>Deskripsi terlalu pendek</td><td>“Rusak”</td><td>“Deskripsi minimal 15 karakter”</td><td>Sesuai</td></tr>
+    <tr><td>5</td><td>Isian valid</td><td>Lokasi, kategori, urgensi, tanggal, 2 unit, deskripsi 91 karakter</td><td>SnackBar hijau; laporan muncul di daftar</td><td>Sesuai</td></tr>
+  </table>
+
+  <div class="kotak abu">
+    <p style="margin-bottom:0">
+      Perintah <code>flutter test</code> menghasilkan <span class="tebal">7 tes lulus</span>.
+      Yang diuji: login dengan kolom kosong, login berhasil membuka Beranda, tampilan
+      <code>NavigationRail</code> pada layar lebar, tombol Buat Laporan membuka form,
+      pesan kesalahan pada form kosong, penolakan jumlah nol, dan penyimpanan laporan
+      valid ke daftar.
+    </p>
+  </div>
+
+</section>
+
+<!-- ============ 4. ALUR & SITEMAP ============ -->
+<section class="halaman pecah">
+  <div class="kepala"><div class="nomor">04 / RANCANGAN</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>User flow</h2>
+  <p>Alur utama dari login sampai proses inti selesai:</p>
+
+  <div class="alur">
+    <div class="simpul">Login<br><span class="kecil">NIM + password</span></div>
+    <div class="tanda">→</div>
+    <div class="simpul utama">Beranda<br><span class="kecil">ringkasan status</span></div>
+    <div class="tanda">→</div>
+    <div class="simpul">Form Laporan<br><span class="kecil">enam kolom</span></div>
+    <div class="tanda">→</div>
+    <div class="simpul">Validasi<br><span class="kecil">per kolom</span></div>
+    <div class="tanda">→</div>
+    <div class="simpul">Tersimpan<br><span class="kecil">status Menunggu</span></div>
+  </div>
+
+  <div class="cabang">
+    <div class="alur">
+      <div class="simpul utama">Beranda</div>
+      <div class="tanda">→</div>
+      <div class="simpul">Laporan Saya<br><span class="kecil">daftar + filter</span></div>
+      <div class="tanda">→</div>
+      <div class="simpul">Detail Laporan<br><span class="kecil">isi + status</span></div>
+    </div>
+  </div>
+
+  <p>
+    Bila validasi gagal, pengguna tetap di Form Laporan dan pesan muncul di bawah kolom
+    yang salah; laporan tidak dikirim. Bila valid, laporan masuk ke daftar, SnackBar
+    hijau muncul, dan pengguna kembali ke Beranda.
+  </p>
+
+  <h2 style="margin-top:7mm">Sitemap</h2>
+  <table class="peta">
+    <tr>
+      <td><div class="kode">H1</div><div class="judul">Login</div>Awal, di luar navigasi</td>
+      <td><div class="kode">H2</div><div class="judul">Beranda</div>Navigasi utama</td>
+      <td><div class="kode">H3</div><div class="judul">Form Laporan</div>Push dari Beranda</td>
+      <td><div class="kode">H4</div><div class="judul">Laporan Saya</div>Navigasi utama</td>
+      <td><div class="kode">H5</div><div class="judul">Detail Laporan</div>Push dari H2/H4</td>
+    </tr>
+  </table>
+
+  <p>
+    Navigasi utama memakai <code>NavigationBar</code> di ponsel dan berubah menjadi
+    <code>NavigationRail</code> pada lebar layar ≥ 600 px. Menu yang sama dipakai di
+    kedua ukuran: Beranda dan Laporan Saya. Halaman Form dan Detail dibuka dengan
+    <code>Navigator.push</code>, lalu kembali dengan <code>pop</code>.
+  </p>
+
+  <table class="data">
+    <tr><th style="width:12mm">Kode</th><th style="width:36mm">Halaman</th><th style="width:18mm">Prioritas</th><th>Isi</th></tr>
+    <tr><td class="kode">H1</td><td>Login</td><td>Must</td><td>NIM, password, validasi kolom kosong, tombol Masuk</td></tr>
+    <tr><td class="kode">H2</td><td>Beranda</td><td>Must</td><td>Sapaan, tiga kartu ringkasan, tombol Buat Laporan, tiga laporan terbaru</td></tr>
+    <tr><td class="kode">H3</td><td>Form Laporan</td><td>Must</td><td>Enam kolom, validasi, SnackBar, tombol Kirim dan Batal</td></tr>
+    <tr><td class="kode">H4</td><td>Laporan Saya</td><td>Must</td><td>Filter status, daftar laporan, keadaan kosong</td></tr>
+    <tr><td class="kode">H5</td><td>Detail Laporan</td><td>Should</td><td>Lokasi, kategori, urgensi, tanggal, jumlah unit, deskripsi, status</td></tr>
+  </table>
+
+  <h3>Navigasi antarhalaman</h3>
+  <pre>Login ──pushReplacement──▶ Beranda (H2)
+Beranda ──push──▶ Form Laporan (H3) ──pop──▶ Beranda
+Beranda ──push──▶ Detail Laporan (H5) ──pop──▶ Beranda
+Beranda ──NavigationBar──▶ Laporan Saya (H4)
+Laporan Saya ──push──▶ Detail Laporan (H5) ──pop──▶ Laporan Saya</pre>
+
+</section>
+
+<!-- ============ 5. WIREFRAME ============ -->
+<section class="halaman">
+  <div class="kepala"><div class="nomor">05 / WIREFRAME</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Wireframe dan kesesuaiannya dengan aplikasi</h2>
+
+  <p>
+    Wireframe dibuat pada Minggu 4 di Figma, mengikuti style guide mini: primer maroon
+    <code>#800020</code>, latar <code>#F5F6F8</code>, jarak kelipatan 8, radius 10–12,
+    dan tombol utama setinggi 52 px.
+  </p>
+
+  <p>
+    <span class="tebal">Tautan Figma:</span><br>
+    <a href="https://www.figma.com/make/RiyY93QWEjZXQP93Cx6Sui/Untitled?code-node-id=0-6&amp;p=f&amp;t=EnpQyA2fcK40nQhe-0&amp;fullscreen=1">
+      figma.com/make/RiyY93QWEjZXQP93Cx6Sui
+    </a>
+  </p>
+
+  <div class="wire">
+    <figure>
+      <div class="bingkai-wire">
+        <div style="text-align:center"><div style="width:7mm;height:7mm;border-radius:50%;background:#e8b6c2;margin:3mm auto 2mm"></div></div>
+        <div class="garis-w gelap" style="width:60%;margin:0 auto 3mm"></div>
+        <div class="kotak-w"></div>
+        <div class="kotak-w"></div>
+        <div class="tombol-w"></div>
+      </div>
+      <figcaption>H1 · Login</figcaption>
+    </figure>
+    <figure>
+      <div class="bingkai-wire">
+        <div class="garis-w gelap" style="height:7mm;background:#f0d3da"></div>
+        <div style="display:flex;gap:1mm;margin:1.4mm 0">
+          <div class="kotak-w" style="flex:1;height:6mm"></div>
+          <div class="kotak-w" style="flex:1;height:6mm"></div>
+          <div class="kotak-w" style="flex:1;height:6mm"></div>
+        </div>
+        <div class="garis-w gelap" style="width:45%"></div>
+        <div class="kotak-w" style="height:6mm"></div>
+        <div class="kotak-w" style="height:6mm"></div>
+      </div>
+      <figcaption>H2 · Beranda</figcaption>
+    </figure>
+    <figure>
+      <div class="bingkai-wire">
+        <div class="garis-w gelap" style="width:55%"></div>
+        <div class="garis-w" style="width:30%;margin-top:2mm"></div>
+        <div class="kotak-w" style="height:5mm"></div>
+        <div class="garis-w" style="width:30%"></div>
+        <div class="kotak-w" style="height:5mm"></div>
+        <div class="garis-w" style="width:30%"></div>
+        <div class="kotak-w" style="height:5mm"></div>
+        <div class="tombol-w"></div>
+      </div>
+      <figcaption>H3 · Form Laporan</figcaption>
+    </figure>
+    <figure>
+      <div class="bingkai-wire">
+        <div style="display:flex;gap:1mm;margin-bottom:2mm">
+          <div class="kotak-w" style="width:9mm;height:4mm;background:#f0d3da"></div>
+          <div class="kotak-w" style="width:9mm;height:4mm"></div>
+          <div class="kotak-w" style="width:9mm;height:4mm"></div>
+        </div>
+        <div class="kotak-w" style="height:9mm"></div>
+        <div class="kotak-w" style="height:9mm"></div>
+        <div class="kotak-w" style="height:9mm"></div>
+      </div>
+      <figcaption>H4 · Laporan Saya</figcaption>
+    </figure>
+    <figure>
+      <div class="bingkai-wire">
+        <div class="garis-w gelap" style="width:65%"></div>
+        <div class="garis-w" style="margin-top:2mm"></div>
+        <div class="garis-w"></div>
+        <div class="garis-w"></div>
+        <div class="garis-w" style="width:70%"></div>
+        <div class="tombol-w"></div>
+      </div>
+      <figcaption>H5 · Detail</figcaption>
+    </figure>
+  </div>
+  <p class="kecil">
+    Sketsa wireframe di atas digambar ulang dari frame Figma agar dapat dicetak; versi
+    interaktifnya ada pada tautan Figma.
+  </p>
+
+  <h3>Wireframe → implementasi</h3>
+  <div class="wire">
+    <figure>
+      <img src="screenshot-login.png" alt="Implementasi login">
+      <figcaption>H1 Login — sama susunannya: logo, dua kolom, tombol utama.</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshot-beranda.png" alt="Implementasi beranda">
+      <figcaption>H2 Beranda — hero, tiga kartu ringkasan, daftar laporan.</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshot-form-laporan.png" alt="Implementasi form">
+      <figcaption>H3 Form — enam kolom berurutan, tombol kirim di bawah.</figcaption>
+    </figure>
+    <figure>
+      <img src="screenshot-laporan-saya.png" alt="Implementasi laporan saya">
+      <figcaption>H4 Laporan Saya — filter di atas, kartu laporan di bawah.</figcaption>
+    </figure>
+  </div>
+
+  <p>
+    Yang berubah saat implementasi hanya kepadatan teks dan ukuran kartu; susunan
+    navigasi, hierarki, dan istilah tetap sama. Perbedaan yang disengaja: tombol
+    “Buat Laporan” diberi ikon tambah, dan status memakai chip berwarna agar lebih
+    cepat dibaca.
+  </p>
+
+</section>
+
+<!-- ============ 6. TECH STACK ============ -->
+<section class="halaman pecah">
+  <div class="kepala"><div class="nomor">06 / TECH STACK</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Tech stack</h2>
+
+  <div class="tumpuk">
+    <div class="chip"><b>Flutter 3.x</b> · antarmuka</div>
+    <div class="chip"><b>Dart</b> · bahasa</div>
+    <div class="chip"><b>Material 3</b> · design system</div>
+    <div class="chip"><b>Firebase Authentication</b> · login</div>
+    <div class="chip"><b>Cloud Firestore</b> · basis data</div>
+    <div class="chip"><b>Firebase Hosting</b> · publikasi web</div>
+    <div class="chip"><b>Git + GitHub</b> · versi</div>
+  </div>
+
+  <table class="data">
+    <tr><th style="width:38mm">Lapisan</th><th style="width:40mm">Teknologi</th><th>Alasan</th></tr>
+    <tr><td>Antarmuka</td><td>Flutter + Material 3</td><td>Satu basis kode untuk web dan Android; widget siap pakai untuk form, navigasi, dan SnackBar.</td></tr>
+    <tr><td>Bahasa</td><td>Dart</td><td>Terintegrasi dengan Flutter; null safety membantu mencegah data kosong.</td></tr>
+    <tr><td>Autentikasi</td><td>Firebase Authentication</td><td>Mengelola sesi dan identitas tanpa server sendiri; tersedia di paket Spark.</td></tr>
+    <tr><td>Basis data</td><td>Cloud Firestore</td><td>Dokumen fleksibel, realtime, dan cocok untuk daftar laporan yang berubah status.</td></tr>
+    <tr><td>Publikasi</td><td>Firebase Hosting</td><td>Menghasilkan URL yang dapat dibuka dosen tanpa memasang aplikasi.</td></tr>
+  </table>
+
+  <h3>Arsitektur aplikasi</h3>
+  <pre>lib/
+  main.dart                 akar aplikasi: tema dan halaman pertama
+  data/data_laporan.dart    model Laporan, data simulasi, helper format
+  pages/
+    login_page.dart         H1 Login
+    halaman_utama.dart      NavigationBar / NavigationRail
+    beranda_page.dart       H2 Beranda
+    form_laporan_page.dart  H3 Form Laporan + validasi
+    laporan_saya_page.dart  H4 Laporan Saya + filter
+    detail_laporan_page.dart H5 Detail Laporan
+  theme/app_theme.dart      palet, jarak, tema Material 3
+  widgets/                  keadaan kosong, chip status</pre>
+
+  <p>
+    Pada tahap UTS, data disimpan di <code>List&lt;Laporan&gt;</code> di memori
+    (<code>lib/data/data_laporan.dart</code>). Laporan yang dikirim tampil selama
+    aplikasi berjalan, lalu kembali ke data simulasi setelah dimuat ulang. Pemindahan
+    ke Firestore dilakukan pada Pertemuan 9–10 dengan bentuk data yang sudah dirancang
+    pada bagian berikut.
+  </p>
+
+  <div class="kotak">
+    <p class="tebal" style="margin-bottom:1mm">Batas teknis yang disengaja</p>
+    <p style="margin-bottom:0">
+      Firebase paket Spark (tanpa billing), autentikasi email/password (bukan OTP
+      telepon), tanpa Cloud Functions, tanpa payment gateway, dan tanpa paket
+      tambahan dari pub.dev. Tujuannya agar satu alur inti selesai lebih dahulu dan
+      dapat dijelaskan keputusannya.
+    </p>
+  </div>
+
+</section>
+
+<!-- ============ 7. FIRESTORE ============ -->
+<section class="halaman">
+  <div class="kepala"><div class="nomor">07 / BASIS DATA</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Rancangan database Firestore</h2>
+
+  <p>
+    Struktur mengikuti kebutuhan bisnis: satu pengguna punya banyak laporan, dan satu
+    laporan punya riwayat perubahan status. Riwayat dipisah ke subcollection agar
+    perubahan status tidak menimpa data lama.
+  </p>
+
+  <h3>users/{uid}</h3>
+  <table class="data">
+    <tr><th style="width:36mm">Field</th><th style="width:26mm">Tipe</th><th>Keterangan</th></tr>
+    <tr><td><code>uid</code></td><td>string</td><td>ID dokumen, sama dengan Firebase Auth UID</td></tr>
+    <tr><td><code>nim</code></td><td>string</td><td>Nomor induk mahasiswa, unik</td></tr>
+    <tr><td><code>nama</code></td><td>string</td><td>Nama tampilan</td></tr>
+    <tr><td><code>kelas</code></td><td>string</td><td>Contoh: A1</td></tr>
+    <tr><td><code>email</code></td><td>string</td><td>Email kampus</td></tr>
+    <tr><td><code>createdAt</code></td><td>timestamp</td><td>Waktu pendaftaran</td></tr>
+  </table>
+
+  <h3>laporan/{laporanId}</h3>
+  <table class="data">
+    <tr><th style="width:42mm">Field</th><th style="width:34mm">Tipe</th><th>Keterangan</th></tr>
+    <tr><td><code>pelaporUid</code></td><td>string</td><td>Referensi ke <code>users.uid</code></td></tr>
+    <tr><td><code>lokasi</code></td><td>string</td><td>Contoh: Gedung B - Ruang B105</td></tr>
+    <tr><td><code>kategori</code></td><td>string</td><td>Listrik, Air &amp; Sanitasi, Furnitur, Jaringan &amp; Internet, Lainnya</td></tr>
+    <tr><td><code>urgensi</code></td><td>string</td><td>Rendah, Sedang, Tinggi</td></tr>
+    <tr><td><code>tanggalKejadian</code></td><td>timestamp</td><td>Tanggal ditemukan, maksimal 30 hari ke belakang</td></tr>
+    <tr><td><code>jumlahUnit</code></td><td>number</td><td>1–50</td></tr>
+    <tr><td><code>deskripsi</code></td><td>string</td><td>15–200 karakter</td></tr>
+    <tr><td><code>status</code></td><td>string</td><td>Menunggu, Diproses, Selesai</td></tr>
+    <tr><td><code>createdAt</code></td><td>timestamp</td><td>Waktu laporan dikirim</td></tr>
+    <tr><td><code>updatedAt</code></td><td>timestamp</td><td>Waktu perubahan terakhir</td></tr>
+    <tr><td><code>fotoUrl</code></td><td>string?</td><td>Opsional, diisi setelah fitur unggah foto (Pertemuan 11)</td></tr>
+  </table>
+
+  <h3>laporan/{laporanId}/riwayatStatus/{riwayatId}</h3>
+  <table class="data">
+    <tr><th style="width:36mm">Field</th><th style="width:26mm">Tipe</th><th>Keterangan</th></tr>
+    <tr><td><code>status</code></td><td>string</td><td>Status baru</td></tr>
+    <tr><td><code>oleh</code></td><td>string</td><td>UID petugas yang mengubah</td></tr>
+    <tr><td><code>catatan</code></td><td>string</td><td>Alasan atau tindakan yang dilakukan</td></tr>
+    <tr><td><code>waktu</code></td><td>timestamp</td><td>Waktu perubahan</td></tr>
+  </table>
+
+  <h3>Contoh dokumen</h3>
+  <pre>laporan/8fK2mQ...
+  pelaporUid      : "u_23_01_55_0003"
+  lokasi          : "Gedung B - Ruang B105"
+  kategori        : "Furnitur"
+  urgensi         : "Sedang"
+  tanggalKejadian : 3 November 2026 08:15
+  jumlahUnit      : 2
+  deskripsi       : "Dua kursi patah pada sandaran..."
+  status          : "Menunggu"
+  createdAt       : 3 November 2026 08:20
+  updatedAt       : 3 November 2026 08:20</pre>
+
+  <h3>Query dan indeks</h3>
+  <table class="data">
+    <tr><th style="width:56mm">Keperluan</th><th>Query</th></tr>
+    <tr><td>Daftar laporan milik mahasiswa</td><td><code>where pelaporUid == uid orderBy createdAt desc</code></td></tr>
+    <tr><td>Daftar laporan menurut status (petugas)</td><td><code>where status == "Menunggu" orderBy createdAt asc</code></td></tr>
+    <tr><td>Detail laporan</td><td><code>doc(laporan/{id})</code></td></tr>
+    <tr><td>Riwayat status</td><td><code>collection(laporan/{id}/riwayatStatus) orderBy waktu asc</code></td></tr>
+  </table>
+
+  <h3>Aturan keamanan (rencana)</h3>
+  <pre>match /laporan/{id} {
+  allow read:   if request.auth.uid == resource.data.pelaporUid;
+  allow create: if request.auth.uid == request.resource.data.pelaporUid
+                &amp;&amp; request.resource.data.status == "Menunggu";
+  allow update: if request.auth.token.peran == "sarpras";
+  allow delete: if false;
+}
+match /users/{uid} {
+  allow read, write: if request.auth.uid == uid;
+}</pre>
+
+  <p class="kecil">
+    Mahasiswa hanya dapat membaca dan membuat laporannya sendiri. Perubahan status
+    hanya untuk petugas Sarpras melalui klaim <code>peran</code>. Penghapusan data
+    tidak dibuka lewat aplikasi.
+  </p>
+
+</section>
+
+<!-- ============ 8. RENCANA ============ -->
+<section class="halaman">
+  <div class="kepala"><div class="nomor">08 / RENCANA</div><div class="nama">LAPORKAMPUS</div></div>
+
+  <h2>Rencana Pertemuan 9–15</h2>
+  <table class="data">
+    <tr><th style="width:18mm">Pertemuan</th><th style="width:56mm">Fokus</th><th>Luaran</th></tr>
+    <tr><td>9</td><td>Firebase Authentication</td><td>Login nyata dengan email/password; sesi tersimpan; halaman login terhubung.</td></tr>
+    <tr><td>10</td><td>Cloud Firestore</td><td>Laporan tersimpan permanen; daftar dibaca dari koleksi; status dari dokumen.</td></tr>
+    <tr><td>11</td><td>Unggah foto</td><td>Foto kerusakan opsional tersimpan di Storage dan URL-nya masuk ke dokumen laporan.</td></tr>
+    <tr><td>12</td><td>Hosting</td><td>Aplikasi web dapat dibuka lewat tautan; diuji di ponsel dan desktop.</td></tr>
+    <tr><td>13</td><td>Pengujian</td><td>Widget test dan uji manual alur utama; perbaikan bug.</td></tr>
+    <tr><td>14</td><td>Penyempurnaan</td><td>Keadaan memuat, penanganan galat jaringan, dan konsistensi istilah.</td></tr>
+    <tr><td>15</td><td>Demo UAS</td><td>Alur lengkap dengan data Firestore dan penjelasan keputusan teknis.</td></tr>
+  </table>
+
+  <h3>Kendala yang sudah dihadapi</h3>
+  <table class="data">
+    <tr><th style="width:46mm">Kendala</th><th>Penanganan</th></tr>
+    <tr><td>Validasi harus konsisten dengan user story</td><td>Aturan ditulis lebih dahulu sebagai tabel, lalu diterjemahkan menjadi validator di <code>form_laporan_page.dart</code>.</td></tr>
+    <tr><td>Tanggal kejadian dibatasi 30 hari</td><td>Memakai <code>showDatePicker</code> dengan <code>firstDate</code> dan <code>lastDate</code>, sehingga pengguna tidak bisa memilih di luar rentang.</td></tr>
+    <tr><td>Data hilang saat aplikasi dimuat ulang</td><td>Disadari sebagai batas tahap UTS; ditulis di halaman detail dan README, lalu diselesaikan pada Pertemuan 10.</td></tr>
+    <tr><td>Label status di kode dan rancangan sempat berbeda</td><td>Diseragamkan menjadi Menunggu, Diproses, Selesai di seluruh aplikasi dan dokumen.</td></tr>
+  </table>
+
+  <h3>Pelajaran yang diambil</h3>
+  <ul>
+    <li>Validasi yang diturunkan dari user story lebih mudah diuji daripada aturan yang ditebak saat menulis kode.</li>
+    <li>Rancangan dan implementasi harus memakai istilah yang sama; perbedaan kecil terlihat saat demo.</li>
+    <li>Commit bertahap membuat riwayat pekerjaan terbaca dan kesalahan lebih mudah ditelusuri.</li>
+    <li>Keadaan kosong perlu dirancang, bukan dibiarkan menjadi layar kosong.</li>
+  </ul>
+
+  <h2 style="margin-top:8mm">Penutup</h2>
+  <p>
+    LaporKampus memusatkan pencatatan dan pemantauan pengaduan fasilitas kampus dalam
+    satu alur: masuk, melaporkan lewat formulir tervalidasi, melihat daftar, dan membuka
+    detail. Purwarupa ini sudah berjalan di Chrome dengan data simulasi; rancangan
+    Firestore dan rencana Pertemuan 9–15 menjadi dasar pengembangan berikutnya.
+  </p>
+  <p>
+    Masukan pada UTS akan dipakai untuk memperbaiki alur, istilah, dan prioritas fitur
+    sebelum fase implementasi menuju UAS.
+  </p>
+
+
+
+</section>
+
+</body>
+</html>

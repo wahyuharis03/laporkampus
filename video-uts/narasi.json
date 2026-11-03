@@ -1,42 +1,82 @@
 {
   "voice": "id-ID-ArdiNeural",
   "rate": "-3%",
-  "jedaDetik": 0.4,
+  "jedaDetik": 0.45,
   "adegan": [
     {
       "id": "pembuka",
       "label": "PEMBUKA",
-      "teks": "Mahasiswa menggunakan berbagai fasilitas kampus dalam kegiatan perkuliahan sehari-hari. Ketika ada fasilitas yang rusak atau bermasalah, penyampaian dan pemantauan pengaduannya menjadi persoalan. Aplikasi ini bernama LaporKampus."
+      "teks": "Selamat pagi. Saya Wahyu Hari Santosa, NIM dua tiga nol satu lima lima nol nol nol tiga, kelas A satu. Proyek saya berjudul LaporKampus, aplikasi pelaporan kerusakan fasilitas kampus. Video ini memuat masalah, pengguna, prioritas fitur, rancangan, demo aplikasi, dan rencana teknis."
     },
     {
       "id": "masalah",
       "label": "MASALAH",
-      "teks": "Rumusan masalah proyek ini adalah: mahasiswa mengalami kesulitan dalam menyampaikan dan memantau pengaduan fasilitas kampus ketika menemukan fasilitas yang rusak atau bermasalah. Akibatnya, laporan sulit dicatat dan statusnya sulit diketahui. Kesulitan itu bisa dijelaskan lewat empat hal. Perlu dicatat, keempatnya adalah penjelasan awal, bukan hasil wawancara atau observasi. Pertama, laporan berpindah lewat banyak saluran, sehingga sulit terkumpul di satu tempat. Kedua, status pengaduan tidak terlihat, sehingga mahasiswa tidak tahu sudah sejauh mana penanganannya. Ketiga, informasi lokasi dan kerusakan tidak seragam, sehingga laporan sulit ditindaklanjuti. Keempat, tidak ada catatan yang tersimpan, sehingga riwayat pengaduan tidak bisa ditelusuri."
+      "teks": "Masalah yang diselesaikan LaporKampus adalah kesulitan mahasiswa menyampaikan dan memantau pengaduan kerusakan fasilitas kampus. Keluhan sering tersampaikan lewat grup chat, lisan, atau pesan pribadi, sehingga tidak tercatat di satu tempat. Mahasiswa tidak tahu apakah laporannya sudah dibaca, sedang ditangani, atau selesai. Tim Sarpras juga menerima informasi yang tidak seragam, sehingga sulit menentukan mana yang harus didahulukan. Dampaknya, fasilitas rusak dibiarkan lebih lama, laporan diulang-ulang, dan tidak ada riwayat yang bisa ditelusuri. Rumusan ini adalah rumusan proyek. Empat contoh di layar merupakan penjelasan awal, bukan hasil wawancara lapangan."
     },
     {
-      "id": "target",
-      "label": "TARGET PENGGUNA",
-      "teks": "Pengguna utama aplikasi ini adalah mahasiswa. Persona berikut bersifat ilustratif, bukan hasil penelitian lapangan. Ia melapor sambil berdiri di lokasi kejadian. Ada empat kebutuhan yang paling relevan. Menyampaikan laporan kerusakan dengan mudah. Mengisi informasi lokasi dan kerusakan secara jelas. Melihat daftar laporan yang pernah dikirim. Dan mengetahui perkembangan status laporan."
+      "id": "persona",
+      "label": "PENGGUNA",
+      "teks": "Pengguna utamanya adalah mahasiswa aktif yang memakai fasilitas kampus setiap hari, terutama saat menemukan kerusakan di ruang kuliah, laboratorium, atau fasilitas umum. Persona saya bernama Rani, dua puluh tahun, semester empat. Ia melapor sambil berdiri di lokasi kejadian, memakai ponsel, dan tidak ingin mengisi formulir panjang. Kebutuhannya: melapor dalam satu menit, tahu status laporan, dan melihat riwayat laporan yang pernah dikirim. Persona ini ilustratif, bukan hasil penelitian lapangan."
     },
     {
-      "id": "cakupan",
-      "label": "CAKUPAN",
-      "teks": "Cakupan aplikasi ini adalah proyek awal, bukan sistem pengelolaan seluruh pekerjaan Sarpras. Karena itu batasnya dibuat tegas. Yang termasuk dalam cakupan: login menggunakan NIM dan password, beranda mahasiswa, form laporan kerusakan, validasi formulir, serta daftar laporan beserta statusnya. Yang berada di luar cakupan: integrasi basis data produksi, akun dan dashboard petugas Sarpras, notifikasi otomatis, peta lokasi fasilitas, dan unggah foto sebagai fitur wajib. Pembatasan ini bukan karena tidak mampu, tetapi agar satu alur inti selesai lebih dahulu."
+      "id": "kebutuhan",
+      "label": "KEBUTUHAN",
+      "teks": "Ada lima user story utama. Pertama, sebagai mahasiswa, saya ingin masuk memakai NIM dan password agar laporan terhubung dengan identitas saya. Kedua, saya ingin melaporkan kerusakan lewat satu formulir agar tidak perlu menghubungi banyak pihak. Ketiga, saya ingin melihat daftar laporan dan statusnya agar tahu laporan mana yang belum ditangani. Keempat, saya ingin membuka detail laporan agar bisa memeriksa isi dan riwayatnya. Kelima, saya ingin menyaring laporan menurut status agar daftar tetap mudah dibaca. Tiga yang pertama berprioritas Must karena tanpa ketiganya masalah utama belum terselesaikan. Dua sisanya Should, karena mempercepat pemantauan tetapi tidak menghalangi alur inti."
     },
     {
-      "id": "alur",
-      "label": "ALUR APLIKASI",
-      "teks": "Alurnya dimulai dari login dengan NIM dan password, lalu mahasiswa tiba di Beranda yang merangkum laporan menurut status. Dari sana ia membuka form laporan kerusakan, dan formulir memvalidasi setiap isian sebelum laporan disimpan. Laporan yang tersimpan muncul di halaman Laporan Saya beserta statusnya. Halaman Detail Laporan tersedia sebagai fitur tambahan."
+      "id": "rancangan",
+      "label": "RANCANGAN",
+      "teks": "Alur pengguna dimulai dari login. Setelah masuk, mahasiswa tiba di Beranda yang merangkum jumlah laporan menurut status. Dari Beranda ada dua cabang. Cabang pertama membuka Form Laporan. Form memeriksa setiap kolom; bila ada yang salah, pesan muncul di dekat kolom dan laporan tidak dikirim. Bila valid, laporan disimpan, SnackBar hijau muncul, dan pengguna kembali ke Beranda. Cabang kedua membuka Laporan Saya, tempat semua laporan tampil beserta status Menunggu, Diproses, atau Selesai. Dari daftar itu pengguna dapat membuka Detail Laporan, lalu kembali. Sitemapnya lima halaman: Login, Beranda, Form Laporan, Laporan Saya, dan Detail Laporan. Dua halaman terakhir dibuka dengan push, sedangkan Beranda dan Laporan Saya berada di navigasi utama."
     },
     {
-      "id": "validasi",
-      "label": "VALIDASI & STATUS",
-      "teks": "Formulir tidak langsung menerima isian. Setiap kolom diperiksa, dan pesan kesalahan muncul bila ada yang belum benar. Status laporan dirancang dalam tiga tahap: Dilaporkan, Sedang Dikerjakan Sarpras, dan Terverifikasi Selesai. Untuk tahap awal, data masih berupa simulasi, sehingga laporan kembali ke contoh awal ketika aplikasi dimuat ulang. Integrasi basis data produksi berada di luar cakupan."
+      "id": "wireframe",
+      "label": "WIREFRAME",
+      "teks": "Wireframe dibuat di Figma pada Minggu empat, mengikuti style guide mini: warna maroon, jarak kelipatan delapan, radius sepuluh sampai dua belas, dan tombol utama setinggi lima puluh dua piksel. Lima frame wireframe dipetakan satu banding satu ke lima halaman aplikasi. Yang berubah saat implementasi hanya kepadatan teks dan ukuran kartu; susunan navigasi dan hierarki tetap sama."
+    },
+    {
+      "id": "demo-login",
+      "label": "DEMO — LOGIN",
+      "teks": "Halaman pertama adalah Login. Saya tekan Masuk tanpa mengisi apa pun, dan aplikasi menolak dengan pesan bahwa NIM dan password wajib diisi. Setelah itu saya masukkan NIM dan password, lalu menekan Masuk. Login masih simulasi; autentikasi Firebase direncanakan pada Pertemuan sembilan."
+    },
+    {
+      "id": "demo-beranda",
+      "label": "DEMO — BERANDA",
+      "teks": "Beranda menampilkan sapaan, tiga kartu ringkasan, dan tiga laporan terbaru. Angka pada kartu dihitung dari data yang sama dengan daftar. Saya tekan Buat Laporan untuk membuka formulir."
+    },
+    {
+      "id": "demo-form",
+      "label": "DEMO — FORM",
+      "teks": "Formulir memiliki enam kolom: lokasi, kategori, tingkat urgensi, tanggal kejadian, jumlah unit, dan deskripsi. Saya kirim dalam keadaan kosong. Setiap kolom menolak isian kosong dengan pesan merah di bawah kolom, dan SnackBar merah memberi tahu bahwa masih ada kolom yang perlu diperiksa."
+    },
+    {
+      "id": "demo-salah",
+      "label": "DEMO — VALIDASI",
+      "teks": "Sekarang saya isi dengan nilai yang salah. Lokasi hanya satu karakter, padahal minimal lima. Jumlah unit enam puluh, melebihi batas lima puluh per laporan. Deskripsi hanya lima karakter, padahal minimal lima belas. Kategori, urgensi, dan tanggal sudah benar. Pesan kesalahan muncul tepat di dekat kolom yang salah, dan laporan tetap tidak bisa dikirim."
+    },
+    {
+      "id": "demo-benar",
+      "label": "DEMO — KIRIM",
+      "teks": "Saya perbaiki ketiga kolom: lokasi menjadi Gedung B Ruang B105, jumlah unit dua, dan deskripsi menjelaskan kursi yang patah. Setelah semua valid, saya tekan Kirim. SnackBar hijau muncul, aplikasi kembali ke Beranda, dan laporan baru tampil di posisi teratas dengan status Menunggu. Ringkasan total berubah dari tiga menjadi empat."
+    },
+    {
+      "id": "demo-daftar",
+      "label": "DEMO — DAFTAR",
+      "teks": "Di Laporan Saya, laporan baru tampil bersama tiga laporan simulasi. Saya coba filter Diproses, yang belum memiliki data. Aplikasi menampilkan keadaan kosong dengan penjelasan, bukan area kosong tanpa keterangan. Saya kembali ke Semua untuk melihat seluruh laporan."
+    },
+    {
+      "id": "demo-detail",
+      "label": "DEMO — DETAIL",
+      "teks": "Terakhir, saya buka detail laporan. Semua data yang saya isi pada formulir tampil di sini, termasuk status dan deskripsi. Ini membuktikan data benar-benar tersimpan dan mengalir dari form ke daftar, lalu ke detail."
+    },
+    {
+      "id": "teknis",
+      "label": "RENCANA TEKNIS",
+      "teks": "Tech stack yang saya pakai: Flutter dan Dart untuk antarmuka, Material tiga sebagai design system, serta Firebase paket Spark. Authentication untuk login, Cloud Firestore untuk basis data, dan Hosting untuk publikasi web. Rancangan Firestore mengikuti kebutuhan bisnis. Collection users menyimpan uid, nim, nama, kelas, dan waktu pendaftaran. Collection laporan menyimpan pelaporUid, lokasi, kategori, urgensi, tanggalKejadian, jumlahUnit, deskripsi, status, createdAt, dan updatedAt. Perubahan status dicatat pada subcollection riwayatStatus berisi status, oleh, catatan, dan waktu, supaya riwayat penanganan tidak menimpa data lama. Query daftar laporan memakai pelaporUid dengan urutan createdAt menurun; untuk petugas, status dengan createdAt. Aturan keamanan membatasi mahasiswa hanya membaca dan menulis laporannya sendiri."
     },
     {
       "id": "penutup",
       "label": "PENUTUP",
-      "teks": "Login, beranda, form laporan, dan daftar laporan dengan statusnya. LaporKampus memusatkan pencatatan dan pemantauan pengaduan fasilitas kampus dalam satu alur. Dibuat oleh Wahyu Hari Santosa."
+      "teks": "Rencana Pertemuan sembilan sampai lima belas: menghubungkan Authentication, memindahkan data ke Firestore, menambah unggah foto, menyiapkan Hosting, lalu pengujian dan penyempurnaan. Kendala utama saya adalah waktu dan menjaga konsistensi antara rancangan dan implementasi. Pelajaran yang saya ambil: validasi harus diturunkan dari user story, dan commit harus bertahap agar riwayat pekerjaan terbaca. Terima kasih."
     }
   ]
 }

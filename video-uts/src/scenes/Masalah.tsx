@@ -1,142 +1,169 @@
 import React from 'react';
-import {AbsoluteFill, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {f, PAD, w} from '../theme';
-import {masuk} from '../components/anim';
-import {LabelBagian} from '../components/LabelBagian';
+import {masuk, masukKiri} from '../components/anim';
+import {Bagian} from '../components/Bagian';
 
-const MASALAH = [
+const POIN = [
   {
     nomor: '01',
-    judul: 'Banyak saluran',
-    isi: 'Laporan berpindah lewat chat, pesan pribadi, atau lisan, sehingga sulit terkumpul di satu tempat.',
+    judul: 'Kanal tersebar',
+    isi: 'Laporan berpindah lewat grup chat, lisan, dan pesan pribadi.',
   },
   {
     nomor: '02',
     judul: 'Status tak terlihat',
-    isi: 'Mahasiswa tidak tahu sudah sejauh mana pengaduannya ditangani.',
+    isi: 'Mahasiswa tidak tahu laporannya sudah dibaca atau ditangani.',
   },
   {
     nomor: '03',
     judul: 'Informasi tidak seragam',
-    isi: 'Lokasi dan kerusakan ditulis dengan cara berbeda, sehingga laporan sulit ditindaklanjuti.',
+    isi: 'Lokasi dan jenis kerusakan ditulis dengan cara berbeda.',
   },
   {
     nomor: '04',
-    judul: 'Tanpa catatan',
-    isi: 'Tidak ada riwayat yang tersimpan, sehingga pengaduan tidak bisa ditelusuri.',
+    judul: 'Riwayat tidak tersimpan',
+    isi: 'Tidak ada catatan yang bisa ditelusuri kembali.',
   },
 ];
 
 export const Masalah: React.FC = () => {
   const frame = useCurrentFrame();
-  const {durationInFrames} = useVideoConfig();
-
-  // Kartu menyala bergiliran mengikuti narasi. Pembagiannya dihitung dari durasi
-  // adegan, jadi tetap sejalan walau panjang audio berubah.
-  const mulaiNyala = Math.round(durationInFrames * 0.3);
-  const sisa = Math.max(1, durationInFrames - mulaiNyala);
-  const aktif = Math.min(
-    3,
-    Math.max(0, Math.floor(((frame - mulaiNyala) / sisa) * 4)),
-  );
 
   return (
     <AbsoluteFill>
-      <LabelBagian nomor="01" teks="MASALAH" />
+      <Bagian nomor="01" teks="MASALAH" />
 
-      <div
-        style={{
-          position: 'absolute',
-          left: PAD,
-          right: PAD,
-          top: 176,
-          fontFamily: f.judul,
-          fontSize: 58,
-          lineHeight: 1.18,
-          color: w.teks,
-          ...masuk(frame, 8),
-        }}
-      >
-        Kesulitan menyampaikan dan memantau pengaduan
+      <div style={{position: 'absolute', left: PAD, top: 186, width: 720}}>
+        <div
+          style={{
+            fontFamily: f.judul,
+            fontSize: 66,
+            lineHeight: 1.12,
+            color: w.teks,
+            ...masuk(frame, 6),
+          }}
+        >
+          Pengaduan yang tidak tercatat
+        </div>
+
+        <div
+          style={{
+            marginTop: 34,
+            paddingLeft: 26,
+            borderLeft: `4px solid ${w.aksen}`,
+            fontFamily: f.isi,
+            fontSize: 27,
+            lineHeight: 1.5,
+            color: '#DCD6E2',
+            ...masuk(frame, 16),
+          }}
+        >
+          Mahasiswa kesulitan menyampaikan dan memantau pengaduan kerusakan
+          fasilitas kampus.
+        </div>
+
+        <div
+          style={{
+            marginTop: 30,
+            fontFamily: f.isi,
+            fontSize: 22,
+            lineHeight: 1.6,
+            color: w.redup,
+            ...masuk(frame, 26),
+          }}
+        >
+          Keluhan tidak terkumpul di satu tempat, statusnya tidak diketahui, dan
+          tim Sarpras menerima informasi yang tidak seragam. Fasilitas rusak pun
+          dibiarkan lebih lama.
+        </div>
+
+        <div
+          style={{
+            marginTop: 44,
+            display: 'flex',
+            gap: 34,
+            ...masuk(frame, 40),
+          }}
+        >
+          <div>
+            <div style={{fontFamily: f.judul, fontSize: 42, color: w.aksenMuda}}>5</div>
+            <div style={{fontFamily: f.isi, fontSize: 17, color: w.redup}}>
+              halaman dalam sitemap
+            </div>
+          </div>
+          <div style={{width: 1, backgroundColor: w.tepi}} />
+          <div>
+            <div style={{fontFamily: f.judul, fontSize: 42, color: w.aksenMuda}}>3</div>
+            <div style={{fontFamily: f.isi, fontSize: 17, color: w.redup}}>
+              status: Menunggu · Diproses · Selesai
+            </div>
+          </div>
+        </div>
       </div>
 
       <div
         style={{
           position: 'absolute',
-          left: PAD,
+          left: 960,
           right: PAD,
-          top: 268,
-          fontFamily: f.isi,
-          fontSize: 28,
-          color: w.aksenMuda,
-          ...masuk(frame, 20),
-        }}
-      >
-        Laporan sulit dicatat, dan statusnya sulit diketahui.
-      </div>
-
-      <div
-        style={{
-          position: 'absolute',
-          left: PAD,
-          right: PAD,
-          top: 340,
+          top: 178,
           display: 'flex',
-          flexWrap: 'wrap',
-          gap: 28,
+          flexDirection: 'column',
+          gap: 16,
         }}
       >
-        {MASALAH.map((m, i) => {
-          const nyala = frame >= mulaiNyala && aktif === i;
-          return (
+        {POIN.map((p, i) => (
+          <div
+            key={p.nomor}
+            style={{
+              display: 'flex',
+              gap: 24,
+              alignItems: 'flex-start',
+              padding: '24px 28px',
+              backgroundColor: w.kartu,
+              border: `1px solid ${w.tepi}`,
+              borderLeft: `3px solid ${w.aksen}`,
+              borderRadius: 12,
+              ...masukKiri(frame, 24 + i * 16),
+            }}
+          >
             <div
-              key={m.nomor}
               style={{
-                width: 'calc(50% - 14px)',
-                boxSizing: 'border-box',
-                padding: '32px 34px',
-                backgroundColor: nyala ? w.kartuNaik : w.kartu,
-                border: `1px solid ${nyala ? w.aksen : w.tepi}`,
-                borderLeft: `4px solid ${nyala ? w.aksen : w.tepi}`,
-                borderRadius: 12,
-                ...masuk(frame, 26 + i * 14),
+                fontFamily: f.judul,
+                fontSize: 26,
+                color: w.aksenMuda,
+                width: 42,
+                flexShrink: 0,
               }}
             >
-              <div style={{display: 'flex', alignItems: 'baseline', gap: 16}}>
-                <div
-                  style={{
-                    fontFamily: f.judul,
-                    fontSize: 28,
-                    color: nyala ? w.aksenMuda : w.redup,
-                  }}
-                >
-                  {m.nomor}
-                </div>
-                <div
-                  style={{
-                    fontFamily: f.isi,
-                    fontSize: 31,
-                    fontWeight: 700,
-                    color: nyala ? w.teks : '#D8D3DE',
-                  }}
-                >
-                  {m.judul}
-                </div>
+              {p.nomor}
+            </div>
+            <div>
+              <div
+                style={{
+                  fontFamily: f.isi,
+                  fontSize: 27,
+                  fontWeight: 700,
+                  color: w.teks,
+                }}
+              >
+                {p.judul}
               </div>
               <div
                 style={{
                   fontFamily: f.isi,
-                  fontSize: 23,
-                  lineHeight: 1.48,
-                  color: nyala ? '#CFC8D6' : w.redup,
-                  marginTop: 10,
+                  fontSize: 21,
+                  lineHeight: 1.45,
+                  color: w.redup,
+                  marginTop: 6,
                 }}
               >
-                {m.isi}
+                {p.isi}
               </div>
             </div>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
       <div
@@ -144,15 +171,16 @@ export const Masalah: React.FC = () => {
           position: 'absolute',
           left: PAD,
           right: PAD,
-          bottom: 84,
+          bottom: 58,
           fontFamily: f.isi,
-          fontSize: 21,
+          fontSize: 19,
           fontStyle: 'italic',
           color: w.redup,
           ...masuk(frame, 120),
         }}
       >
-        Keempat hal di atas adalah penjelasan awal, bukan hasil wawancara atau observasi lapangan.
+        Empat poin di atas adalah penjelasan awal, bukan hasil wawancara atau
+        observasi lapangan.
       </div>
     </AbsoluteFill>
   );
