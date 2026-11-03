@@ -1,89 +1,65 @@
-# Catatan Revisi Naskah Video
+# Catatan Naskah Video
 
-Revisi 30 Oktober 2026, menindaklanjuti masukan pada bagian A (masalah),
-B (target pengguna), dan C (scope).
+Dokumen ini mencatat keputusan yang diambil saat menyusun naskah, termasuk
+masukan yang masuk pada 30 Oktober 2026 dan perubahan besar pada 4 November 2026.
 
 ---
 
-## 1. Ringkasan yang berubah
+## 1. Masukan 30 Oktober dan penyelesaiannya
 
 | Bagian | Sebelum | Sesudah |
 | --- | --- | --- |
 | Pembuka | "Setiap hari, ribuan mahasiswa memakai fasilitas kampus yang sama." | "Mahasiswa menggunakan berbagai fasilitas kampus dalam kegiatan perkuliahan sehari-hari." |
 | Masalah | Empat masalah disajikan sebagai keadaan yang terjadi | Rumusan masalah resmi dipakai sebagai masalah utama; empat kartu menjadi **penjelasan awal** dengan pernyataan tegas bahwa belum diverifikasi |
-| Target | Persona Dimas tampil tanpa keterangan | Diberi label **PERSONA ILUSTRATIF** dan catatan "bukan hasil penelitian lapangan"; empat kebutuhan memakai rumusan yang diminta |
-| Scope | Daftar karangan sendiri, 5 masuk / 5 keluar | Persis mengikuti daftar yang ditetapkan: Login NIM + password, Beranda, Form Laporan, Validasi, Daftar laporan dan statusnya |
-| Alur | Lima halaman setara | Empat halaman inti; Detail Laporan dipisah sebagai **TAMBAHAN** (prioritas Should) |
-| Bukti | "6 kolom", "4 jenis masukan", "7 pengujian lulus" | Adegan diganti menjadi **Validasi & Status**; angka kolom dan angka pengujian dihapus |
-| Basis data | Empat tabel + rencana integrasi | Digabung ke adegan Validasi & Status sebagai pernyataan bahwa data masih simulasi dan integrasi basis data produksi di luar cakupan |
-| Penutup | "…tujuh pengujian otomatis." | Klaim pengujian dihapus; diganti ringkasan empat halaman inti |
+| Pengguna | Persona tampil tanpa keterangan | Diberi label **PERSONA ILUSTRATIF** dan catatan "bukan hasil penelitian lapangan" |
+| Cakupan | Daftar karangan sendiri | Mengikuti daftar yang ditetapkan: Login, Beranda, Form Laporan, Validasi, Daftar laporan dan statusnya |
+| Klaim pengujian | "tujuh pengujian otomatis" | Dihapus dari narasi |
 
-Jumlah adegan turun dari 8 menjadi 7. Durasi berubah dari 3:29 menjadi 3:18.
+Ketiga hal yang semula tidak cocok dengan kode sudah diselesaikan dengan
+menyesuaikan **video ke kode**, bukan sebaliknya:
 
----
-
-## 2. Tiga hal yang perlu Anda putuskan
-
-Masukan itu menyebut beberapa keadaan yang **tidak sama dengan kode yang ada sekarang**.
-Saya sudah periksa ulang, dan berikut buktinya. Saya tidak mengubah kode, hanya naskah.
-
-### a. Jumlah kolom formulir
-
-Masukan menyebut formulir baru memuat tiga informasi utama: nama fasilitas, lokasi, dan deskripsi.
-Kenyataannya `lib/pages/form_laporan_page.dart` punya **enam** kolom:
-
-| Baris | Kolom |
-| --- | --- |
-| 175 | Lokasi fasilitas |
-| 185 | Kategori kerusakan |
-| 205 | Tingkat urgensi |
-| 227 | Tanggal kejadian |
-| 242 | Jumlah unit rusak |
-| 255 | Deskripsi kerusakan |
-
-Naskah sekarang **tidak menyebut jumlah kolom sama sekali**, jadi aman untuk kedua versi.
-Tapi saat demo, layar akan menunjukkan enam kolom. Kalau memang tiga kolom yang diinginkan,
-formulirnya perlu disederhanakan lebih dulu — bukan naskahnya yang disesuaikan.
-
-### b. Label status
-
-Masukan menetapkan tiga status: **Dilaporkan**, **Sedang Dikerjakan Sarpras**, **Terverifikasi Selesai**.
-Kode masih memakai label lain, di `lib/data/data_laporan.dart` baris 43–45:
-
-```
-statusMenunggu = 'Menunggu'
-statusDiproses = 'Diproses'
-statusSelesai  = 'Selesai'
-```
-
-Video sekarang memakai tiga label yang ditetapkan. **Ini akan terlihat bertentangan saat demo**,
-karena aplikasi menampilkan "Menunggu / Diproses / Selesai". Sebelum presentasi, ganti label di
-`data_laporan.dart` (dan di `label_status.dart` bila ada pemetaan warna) agar sama.
-
-### c. Klaim pengujian otomatis
-
-Masukan meminta klaim "tujuh pengujian otomatis" dihapus sampai pengujian benar-benar dibuat
-dan dijalankan. Pengujiannya **sudah ada dan lulus** — saya jalankan ulang saat revisi:
-
-```
-00:02 +6: Form valid menyimpan laporan ke daftar di memori
-00:03 +7: All tests passed!
-```
-
-Tujuh `testWidgets` di `test/widget_test.dart`, semuanya lulus, `flutter analyze` bersih.
-
-Klaim itu tetap saya hapus dari narasi sesuai permintaan, karena menghilangkan sesuatu yang
-benar bukan kebohongan. Tapi kalau dosen beranggapan pengujian belum ada, Anda punya bukti
-untuk menunjukkan sebaliknya — cukup jalankan `flutter test` di depan kelas.
+| Hal | Keadaan kode | Keputusan pada video |
+| --- | --- | --- |
+| Jumlah kolom formulir | Enam kolom (`form_laporan_page.dart` baris 175–255) | Video menyebut dan menampilkan **enam kolom** |
+| Label status | `Menunggu / Diproses / Selesai` (`data_laporan.dart` baris 43–45) | Video memakai label yang sama |
+| Pengujian otomatis | Tujuh `testWidgets`, semuanya lulus | Tidak diklaim di narasi; buktinya ada bila ditanyakan |
 
 ---
 
-## 3. Satu catatan tambahan
+## 2. Perubahan 4 November: video disusun ulang mengikuti brief UTS
 
-Masukan menyebut Detail Laporan sebagai "fitur tambahan (Should), bukan keharusan utama".
-Halaman itu **sudah dibuat** (`lib/pages/detail_laporan_page.dart`) dan berfungsi.
-Karena itu di video ia tidak disebut sebagai rencana, melainkan ditandai **TAMBAHAN** —
-sudah ada, tetapi bukan bagian dari alur inti. Ini sesuai dengan status Should yang dimaksud.
+Brief UTS meminta isi yang jauh lebih lengkap daripada versi sebelumnya
+(3 menit 18 detik, 7 adegan). Versi sekarang **7 menit 30 detik, 15 adegan**:
+
+| No | Adegan | Isi |
+| --- | --- | --- |
+| 1 | Pembuka | Nama, NIM, kelas, judul aplikasi |
+| 2 | Masalah | Rumusan masalah + empat penjelasan awal |
+| 3 | Pengguna | Persona ilustratif + empat kebutuhan |
+| 4 | Kebutuhan | Lima user story dan prioritasnya (Must/Should) |
+| 5 | Rancangan | User flow dan sitemap lima halaman |
+| 6 | Wireframe | Lima wireframe dan hasil implementasinya |
+| 7–13 | Demo | Login, Beranda, Form, Validasi, Kirim, Daftar, Detail |
+| 14 | Rencana teknis | Tech stack, koleksi Firestore, aturan keamanan |
+| 15 | Penutup | Rencana pertemuan 9–15, kendala, pelajaran |
+
+Demo pada adegan 7–13 adalah **rekaman aplikasi yang benar-benar berjalan di
+Chrome**, bukan animasi atau slide. Perekatannya dijelaskan di
+[`README.md`](README.md).
+
+---
+
+## 3. Batas yang dijaga
+
+1. **Tidak ada angka yang tidak bisa dipertanggungjawabkan.** Jumlah kolom,
+   jumlah halaman, dan jumlah pengujian hanya disebut bila sesuai kode.
+2. **Masalah tidak diklaim sebagai hasil penelitian.** Adegan masalah memuat
+   catatan di layar bahwa empat penjelasannya adalah penjelasan awal, bukan
+   hasil wawancara atau observasi lapangan.
+3. **Persona diberi label ilustratif** di layar, bukan hanya di narasi.
+4. **Data masih di memori.** Narasi menyebutnya apa adanya; Firestore adalah
+   rancangan, bukan yang sudah berjalan.
+5. **Istilah status sama dengan aplikasi:** Menunggu, Diproses, Selesai.
 
 ---
 
@@ -91,6 +67,6 @@ sudah ada, tetapi bukan bagian dari alur inti. Ini sesuai dengan status Should y
 
 | Prioritas | Pekerjaan | Alasan |
 | --- | --- | --- |
-| 1 | Samakan label status di `data_laporan.dart` dengan tiga status di video | Menghindari kontradiksi video dan layar |
-| 2 | Putuskan: formulir 6 kolom dipertahankan, atau disederhanakan jadi 3 | Naskah sudah netral, tapi demo akan menunjukkan jumlah sebenarnya |
-| 3 | Siapkan jawaban bila ditanya "kenapa belum ada wawancara?" | Video sudah menyatakan masalah bersumber dari rumusan proyek, bukan penelitian lapangan |
+| 1 | Jalankan `flutter test` sekali lagi sebelum tampil | Memastikan tujuh tes masih lulus di mesin presentasi |
+| 2 | Siapkan jawaban "kenapa belum ada wawancara?" | Video sudah menyatakan masalah bersumber dari rumusan proyek |
+| 3 | Siapkan jawaban "kapan Firestore dipakai?" | Rancangan sudah ada; implementasi dijadwalkan Pertemuan 9 |

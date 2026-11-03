@@ -68,6 +68,11 @@ python scripts/potong-demo.py
 `potong-demo.py` memotong rekaman pada penanda itu, menghitung sendiri jeda awal
 video, lalu mengubahnya menjadi MP4 30 fps. Hasilnya disalin ke `public/demo/`.
 
+Satu bab dipotong lagi di dalam skrip itu: pada adegan "Kirim dan simpan data",
+klik tombol Kirim baru terjadi sekitar 19,5 detik, padahal narasi menyebutnya pada
+13,5 detik. Enam detik pertama klip dibuang supaya keduanya bertemu; sisa waktu
+adegan diisi gambar diam dari frame terakhir agar layar tidak membeku.
+
 Kursor pada rekaman adalah elemen DOM yang disuntikkan skrip, supaya gerakan mouse
 terlihat. Aplikasi tetap berjalan seperti biasa.
 

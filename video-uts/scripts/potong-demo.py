@@ -8,6 +8,7 @@ perlu menyetel playbackRate.
 import json
 import os
 import re
+import shutil
 import subprocess
 
 AKAR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,3 +55,28 @@ for i, nama in enumerate(urutan):
         check=True)
 
 print("selesai")
+
+# ---------------------------------------------------------------------------
+# Klip "kirim" direkam terlalu lambat: klik Kirim baru terjadi sekitar 19,5 dtk,
+# padahal narasi menyebutnya pada 13,5 dtk. Enam detik di awal dipotong supaya
+# keduanya bertemu. Sisa waktu adegan diisi gambar diam dari frame terakhir.
+PUBLIK = os.path.join(AKAR, "public", "demo")
+os.makedirs(PUBLIK, exist_ok=True)
+
+for nama in urutan:
+    shutil.copy2(os.path.join(DEMO, "%s.mp4" % nama), os.path.join(PUBLIK, "%s.mp4" % nama))
+
+POTONG = 6.0
+sumber = os.path.join(DEMO, "demo-benar.mp4")
+keluar = os.path.join(PUBLIK, "demo-benar-potong.mp4")
+subprocess.run(
+    [FFMPEG, "-y", "-v", "error", "-ss", "%.3f" % POTONG, "-i", sumber,
+     "-c:v", "libx264", "-preset", "medium", "-crf", "18", "-an", "-r", "30",
+     "-pix_fmt", "yuv420p", keluar],
+    check=True)
+subprocess.run(
+    [FFMPEG, "-y", "-v", "error", "-sseof", "-0.1", "-i", keluar,
+     "-frames:v", "1", os.path.join(PUBLIK, "demo-benar-akhir.png")],
+    check=True)
+
+print("demo-benar dipotong %.1f dtk di awal; klip dan gambar diam disalin ke public/demo" % POTONG)

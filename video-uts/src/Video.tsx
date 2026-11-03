@@ -54,13 +54,17 @@ const BAB_DEMO: Record<string, Omit<BabDemo, 'detik'>> = {
     fokus: '50% 0%',
   },
   'demo-benar': {
-    klip: 'demo-benar',
+    klip: 'demo-benar-potong',
     judul: 'Kirim dan simpan data',
     caption:
       'SnackBar hijau muncul, aplikasi kembali ke Beranda, dan laporan baru tampil di posisi teratas.',
     langkah: 5,
-    zoom: 1.05,
+    // Tanpa perbesaran: SnackBar ada di dasar layar, dan zoom 1,05 memotongnya.
+    zoom: 1.0,
     fokus: '50% 0%',
+    // Klip dipotong 6 detik di awal supaya klik "Kirim" jatuh tepat saat narasi
+    // menyebutnya. Sisa waktunya diisi gambar diam agar layar tidak membeku.
+    ekor: 'demo-benar-akhir.png',
   },
   'demo-daftar': {
     klip: 'demo-daftar',
@@ -84,9 +88,9 @@ const BAB_DEMO: Record<string, Omit<BabDemo, 'detik'>> = {
 const DURASI_KLIP: Record<string, number> = {
   'demo-login': 19.35,
   'demo-beranda': 13.02,
-  'demo-form': 18.67,
+  'demo-form': 19.4,
   'demo-salah': 25.45,
-  'demo-benar': 24.19,
+  'demo-benar': 17.4,
   'demo-daftar': 18.27,
   'demo-detail': 15.36,
 };
