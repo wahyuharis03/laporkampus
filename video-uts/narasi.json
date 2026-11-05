@@ -36,37 +36,32 @@
     {
       "id": "demo-login",
       "label": "DEMO — LOGIN",
-      "teks": "Halaman pertama adalah Login. Saya tekan Masuk tanpa mengisi apa pun, dan aplikasi menolak dengan pesan bahwa NIM dan password wajib diisi. Setelah itu saya masukkan NIM dan password, lalu menekan Masuk. Login masih simulasi; autentikasi Firebase direncanakan pada Pertemuan sembilan."
+      "teks": "Halaman pertama adalah Login. Saya tekan Masuk tanpa mengisi apa pun, dan aplikasi menolak dengan pesan bahwa NIM dan password wajib diisi. Setelah NIM dan password saya isi, saya menekan Masuk. Login masih simulasi; autentikasi Firebase direncanakan pada Pertemuan sembilan."
     },
     {
       "id": "demo-beranda",
       "label": "DEMO — BERANDA",
-      "teks": "Beranda menampilkan sapaan, tiga kartu ringkasan, dan tiga laporan terbaru. Angka pada kartu dihitung dari data yang sama dengan daftar. Saya tekan Buat Laporan untuk membuka formulir."
+      "teks": "Beranda menampilkan tiga kartu ringkasan dan laporan terbaru. Saya buka satu laporan yang sudah selesai untuk melihat detailnya. Lalu saya kembali dan membuat laporan baru."
     },
     {
       "id": "demo-form",
-      "label": "DEMO — FORM",
-      "teks": "Formulir memiliki enam kolom: lokasi, kategori, tingkat urgensi, tanggal kejadian, jumlah unit, dan deskripsi. Saya kirim dalam keadaan kosong. Setiap kolom menolak isian kosong dengan pesan merah di bawah kolom, dan SnackBar merah memberi tahu bahwa masih ada kolom yang perlu diperiksa."
+      "label": "DEMO — FORMULIR",
+      "teks": "Formulir ini punya enam kolom, dan semuanya wajib. Saya kirim dalam keadaan kosong lebih dulu: setiap kolom menolak isian kosong dengan pesan merah di bawah kolomnya. Setelah itu saya isi lokasi, Gedung D5-04. Kategori kerusakan saya buka — ada Listrik, Air dan Sanitasi, Furnitur, Jaringan dan Internet, serta Lainnya. Saya pilih Lainnya. Tingkat urgensi saya pilih Rendah. Tanggal kejadian saya buka lewat pemilih tanggal, lalu saya pilih lima November dua ribu dua puluh enam. Tanggal yang dipilih langsung tampil di kolom."
     },
     {
-      "id": "demo-salah",
-      "label": "DEMO — VALIDASI",
-      "teks": "Sekarang saya isi dengan nilai yang salah. Lokasi hanya satu karakter, padahal minimal lima. Jumlah unit enam puluh, melebihi batas lima puluh per laporan. Deskripsi hanya lima karakter, padahal minimal lima belas. Kategori, urgensi, dan tanggal sudah benar. Pesan kesalahan muncul tepat di dekat kolom yang salah, dan laporan tetap tidak bisa dikirim."
+      "id": "demo-isi",
+      "label": "DEMO — PENGISIAN",
+      "teks": "Jumlah unit saya isi satu, karena hanya satu unit yang bermasalah. Deskripsi saya isi sembilan karakter lebih dulu, dan aplikasi menolak: deskripsi minimal lima belas karakter. Saya lengkapi menjadi AC kurang dingin atau kurang sejuk, sesuai kondisi sebenarnya. Setelah semua kolom valid, saya tekan Kirim Laporan. Perhatikan, pesan kesalahan selalu muncul tepat di bawah kolom yang salah."
     },
     {
-      "id": "demo-benar",
+      "id": "demo-kirim",
       "label": "DEMO — KIRIM",
-      "teks": "Saya perbaiki ketiga kolom: lokasi menjadi Gedung B Ruang B105, jumlah unit dua, dan deskripsi menjelaskan kursi yang patah. Setelah semua valid, saya tekan Kirim. SnackBar hijau muncul, aplikasi kembali ke Beranda, dan laporan baru tampil di posisi teratas dengan status Menunggu. Ringkasan total berubah dari tiga menjadi empat."
+      "teks": "SnackBar hijau muncul: laporan terkirim. Aplikasi kembali ke Beranda, laporan baru tampil teratas dengan status Menunggu, dan total berubah dari tiga menjadi empat."
     },
     {
       "id": "demo-daftar",
       "label": "DEMO — DAFTAR",
-      "teks": "Di Laporan Saya, laporan baru tampil bersama tiga laporan simulasi. Saya coba filter Diproses, yang belum memiliki data. Aplikasi menampilkan keadaan kosong dengan penjelasan, bukan area kosong tanpa keterangan. Saya kembali ke Semua untuk melihat seluruh laporan."
-    },
-    {
-      "id": "demo-detail",
-      "label": "DEMO — DETAIL",
-      "teks": "Terakhir, saya buka detail laporan. Semua data yang saya isi pada formulir tampil di sini, termasuk status dan deskripsi. Ini membuktikan data benar-benar tersimpan dan mengalir dari form ke daftar, lalu ke detail."
+      "teks": "Di Laporan Saya, laporan baru tampil bersama tiga laporan simulasi. Saya coba filter Menunggu dan Selesai; daftar langsung menyesuaikan tanpa memuat ulang halaman. Status tetap terbaca."
     },
     {
       "id": "teknis",

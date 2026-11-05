@@ -23,19 +23,21 @@ Proyek individu MK Mobile and Web Application Development, Semester Ganjil 2026/
 
 ## Video presentasi UTS
 
-Video 7 menit 30 detik yang mengikuti alur brief UTS: pembuka, masalah dan
+Video 7 menit 15 detik yang mengikuti alur brief UTS: pembuka, masalah dan
 pengguna, kebutuhan dan prioritas, rancangan (user flow, sitemap, wireframe),
 demo aplikasi yang berjalan di Chrome, lalu rencana teknis dan penutup.
 Narasi Bahasa Indonesia dibuat dengan edge-tts; gambar disusun dengan Remotion.
 
-Demo pada video adalah rekaman layar aplikasi sungguhan, bukan slide: login,
-Beranda, form enam kolom, validasi kosong, tiga isian salah, pengiriman yang
-berhasil, daftar laporan, keadaan kosong, dan detail laporan.
+Demo pada video adalah rekaman layar aplikasi sungguhan di Chrome, bukan slide:
+login dengan validasi kolom kosong, Beranda dan detail laporan, formulir enam
+kolom yang menolak isian kosong, pengisian yang benar (Gedung D5-04, Lainnya,
+Rendah, 1 unit), SnackBar hijau saat terkirim, lalu daftar laporan dengan filter
+status.
 
 - **Tonton atau unduh:**  
   <https://github.com/wahyuharis03/laporkampus/releases/download/video-uts-final/laporkampus-uts.mp4>
-- **Kode sumber video:** [`video-uts/`](video-uts/) — naskah, skrip TTS, perekam
-  demo (Playwright), dan komponen tiap adegan
+- **Kode sumber video:** [`video-uts/`](video-uts/) — naskah, skrip TTS, skrip
+  pemotong rekaman demo, dan komponen tiap adegan
 - **Catatan revisi naskah:** [`video-uts/CATATAN-REVISI.md`](video-uts/CATATAN-REVISI.md)
 
 ## Proposal ringkas

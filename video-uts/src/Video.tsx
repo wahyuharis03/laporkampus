@@ -19,80 +19,62 @@ import {Demo, type BabDemo} from './scenes/Demo';
 import {Teknis} from './scenes/Teknis';
 import {Penutup} from './scenes/Penutup';
 
-const BAB_DEMO: Record<string, Omit<BabDemo, 'detik'>> = {
+// Rekaman layar milik sendiri (1920x1020, Chrome). Tiap bab dipotong pada
+// transisi halaman, bukan pada durasi narasi — lihat scripts/potong-rekaman-user.py.
+const BAB_DEMO: Record<string, BabDemo> = {
   'demo-login': {
-    klip: 'demo-login',
-    judul: 'Login dan validasi awal',
+    klip: 'usr-login',
+    judul: 'Login',
     caption:
-      'Masuk tanpa mengisi ditolak dengan pesan yang jelas. Setelah NIM dan password diisi, pengguna masuk ke Beranda.',
+      'Masuk tanpa isian ditolak dengan pesan merah. Setelah NIM dan password diisi, pengguna masuk ke Beranda.',
     langkah: 1,
+    detik: 18.9,
+    ekor: 'usr-login-akhir.png',
   },
   'demo-beranda': {
-    klip: 'demo-beranda',
-    judul: 'Beranda: ringkasan status',
+    klip: 'usr-beranda',
+    judul: 'Beranda',
     caption:
-      'Ringkasan status dan laporan terbaru dihitung dari data yang sama dengan daftar — bukan angka tetap.',
+      'Tiga kartu ringkasan dan laporan terbaru. Satu laporan dibuka untuk melihat halaman detail.',
     langkah: 2,
+    detik: 14.1,
+    ekor: 'usr-beranda-akhir.png',
   },
   'demo-form': {
-    klip: 'demo-form',
-    judul: 'Form Laporan: enam kolom',
+    klip: 'usr-form',
+    judul: 'Formulir',
     caption:
-      'Enam kolom dengan dua jenis input: teks, dropdown, tanggal, dan angka. Kirim kosong memunculkan pesan di tiap kolom.',
+      'Enam kolom wajib. Kirim kosong memunculkan pesan merah di bawah tiap kolom.',
     langkah: 3,
-    zoom: 1.05,
-    fokus: '50% 0%',
-    ekor: 'demo-form-akhir.png',
+    detik: 37.5,
   },
-  'demo-salah': {
-    klip: 'demo-salah',
-    judul: 'Validasi menolak isian salah',
+  'demo-isi': {
+    klip: 'usr-isi',
+    judul: 'Pengisian',
     caption:
-      'Lokasi kurang dari 5 karakter, jumlah lebih dari 50 unit, dan deskripsi kurang dari 15 karakter ditolak.',
+      'Jumlah unit, deskripsi, lalu kirim. Pesan kesalahan muncul tepat di bawah kolom yang salah.',
     langkah: 4,
-    zoom: 1.05,
-    fokus: '50% 0%',
+    detik: 26.1,
+    ekor: 'usr-isi-akhir.png',
   },
-  'demo-benar': {
-    klip: 'demo-benar-potong',
-    judul: 'Kirim dan simpan data',
+  'demo-kirim': {
+    klip: 'usr-kirim',
+    judul: 'Kirim',
     caption:
-      'SnackBar hijau muncul, aplikasi kembali ke Beranda, dan laporan baru tampil di posisi teratas.',
+      'SnackBar hijau, kembali ke Beranda, laporan baru di posisi teratas, dan total berubah 3 → 4.',
     langkah: 5,
-    // Tanpa perbesaran: SnackBar ada di dasar layar, dan zoom 1,05 memotongnya.
-    zoom: 1.0,
-    fokus: '50% 0%',
-    // Klip dipotong 6 detik di awal supaya klik "Kirim" jatuh tepat saat narasi
-    // menyebutnya. Sisa waktunya diisi gambar diam agar layar tidak membeku.
-    ekor: 'demo-benar-akhir.png',
+    detik: 10.2,
+    ekor: 'usr-kirim-akhir.png',
   },
   'demo-daftar': {
-    klip: 'demo-daftar',
-    judul: 'Laporan Saya dan keadaan kosong',
+    klip: 'usr-daftar',
+    judul: 'Daftar',
     caption:
-      'Filter Diproses belum punya data. Aplikasi menjelaskan keadaan kosong, bukan meninggalkan layar kosong.',
+      'Laporan baru ikut tampil di Laporan Saya. Filter Menunggu dan Selesai langsung menyaring daftar.',
     langkah: 6,
+    detik: 12.4,
+    ekor: 'usr-daftar-akhir.png',
   },
-  'demo-detail': {
-    klip: 'demo-detail',
-    judul: 'Detail Laporan',
-    caption:
-      'Semua isian formulir tampil di sini. Data mengalir dari form ke daftar, lalu ke detail.',
-    langkah: 7,
-    zoom: 1.0,
-    fokus: '50% 0%',
-  },
-};
-
-// Durasi berkas klip demo (detik), dipakai untuk menghitung sisa gambar diam.
-const DURASI_KLIP: Record<string, number> = {
-  'demo-login': 19.35,
-  'demo-beranda': 13.02,
-  'demo-form': 19.4,
-  'demo-salah': 25.45,
-  'demo-benar': 17.4,
-  'demo-daftar': 18.27,
-  'demo-detail': 15.36,
 };
 
 const PETA: Record<string, React.FC> = {
@@ -143,7 +125,7 @@ export const Video: React.FC = () => {
           return (
             <Series.Sequence key={adegan.id} durationInFrames={adegan.frames}>
               {bab ? (
-                <Demo {...bab} detik={DURASI_KLIP[adegan.id]} />
+                <Demo {...bab} />
               ) : (
                 <Adegan />
               )}

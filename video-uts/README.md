@@ -4,11 +4,11 @@ Video presentasi UTS yang mengikuti alur brief: pembuka, masalah dan pengguna,
 kebutuhan dan prioritas, rancangan, demo aplikasi yang berjalan, lalu rencana
 teknis dan penutup.
 
-Dibuat dengan [Remotion](https://remotion.dev) (React → video), narasi
-[edge-tts](https://github.com/rany2/edge-tts), dan perekaman demo memakai
-[Playwright](https://playwright.dev) yang menjalankan aplikasi Flutter di Chrome.
+Dibuat dengan [Remotion](https://remotion.dev) (React → video) dan narasi
+[edge-tts](https://github.com/rany2/edge-tts). Bagian demo memakai rekaman layar
+aplikasi Flutter yang berjalan di Chrome.
 
-Hasil: `out/laporkampus-uts.mp4` — 1920×1080, 30 fps, H.264 + AAC, **7 menit 30 detik**.
+Hasil: `out/laporkampus-uts.mp4` — 1920×1080, 30 fps, H.264 + AAC, **7 menit 15 detik**.
 
 **Unduh:** <https://github.com/wahyuharis03/laporkampus/releases/download/video-uts-final/laporkampus-uts.mp4>
 
@@ -26,16 +26,15 @@ aset Release `video-uts-final`. Riwayat perubahan naskah ada di
 | 4 | Kebutuhan — lima user story dan prioritas | 44,69 s |
 | 5 | Rancangan — user flow dan sitemap | 53,57 s |
 | 6 | Wireframe — lima frame dan implementasinya | 24,10 s |
-| 7 | Demo — Login | 19,34 s |
-| 8 | Demo — Beranda | 13,01 s |
-| 9 | Demo — Form Laporan | 19,87 s |
-| 10 | Demo — validasi menolak isian salah | 25,44 s |
-| 11 | Demo — kirim dan simpan data | 23,40 s |
-| 12 | Demo — daftar dan keadaan kosong | 18,26 s |
-| 13 | Demo — detail laporan | 14,76 s |
-| 14 | Rencana teknis — stack dan Firestore | 60,12 s |
-| 15 | Penutup — rencana 9–15, kendala, pelajaran | 27,17 s |
-| | **Total** | **450,4 s (7:30)** |
+| 7 | Demo — Login dan validasi | 19,25 s |
+| 8 | Demo — Beranda dan detail laporan | 11,42 s |
+| 9 | Demo — formulir dan validasi kosong | 37,61 s |
+| 10 | Demo — pengisian dan kirim | 26,18 s |
+| 11 | Demo — SnackBar hijau dan ringkasan | 11,30 s |
+| 12 | Demo — daftar dan filter | 13,54 s |
+| 13 | Rencana teknis — stack dan Firestore | 60,12 s |
+| 14 | Penutup — rencana 9–15, kendala, pelajaran | 27,17 s |
+| | **Total** | **435,2 s (7:15)** |
 
 ## Kenapa audio dulu, video kemudian
 
@@ -49,32 +48,37 @@ tanpa menggeser timing secara manual.
 
 ## Cara demo direkam
 
-Demo bukan slide dan bukan animasi tiruan. Aplikasi Flutter dijalankan sebagai web,
-lalu Playwright mengisi form, menekan tombol, dan merekam layarnya:
+Demo bukan slide dan bukan animasi tiruan: rekaman layar aplikasi yang benar-benar
+berjalan di Chrome, direkam sendiri pada resolusi 1920×1020, lengkap dengan kursor,
+pesan kesalahan, pemilih tanggal, dan SnackBar asli. Rekaman itu tidak punya audio,
+jadi narasinya tetap dari edge-tts.
+
+Berkas asal berdurasi 148 detik, tetapi tidak semuanya dipakai: ada bagian yang
+membuka laporan lain lalu kembali, yang memutus alur. `scripts/potong-rekaman-user.py`
+memotongnya menjadi enam bab pada **transisi halaman**, bukan pada durasi narasi:
 
 ```bash
-# 1. Bangun dan sajikan aplikasi
-flutter build web --release
-python -m http.server 8099 --bind 127.0.0.1 --directory ../build/web
-
-# 2. Rekam demo (butuh Chrome dan `npx playwright install ffmpeg`)
-node scripts/rekam-demo.mjs
-
-# 3. Potong per bab sesuai durasi narasi
-python scripts/potong-demo.py
+python scripts/potong-rekaman-user.py
 ```
 
-`rekam-demo.mjs` mencatat penanda waktu tiap bab ke `out/demo/marks.json`.
-`potong-demo.py` memotong rekaman pada penanda itu, menghitung sendiri jeda awal
-video, lalu mengubahnya menjadi MP4 30 fps. Hasilnya disalin ke `public/demo/`.
+| Bab | Mulai | Durasi | Isi |
+| --- | --- | --- | --- |
+| `usr-login` | 6,4 s | 18,9 s | kirim kosong, pesan merah, isi, masuk |
+| `usr-beranda` | 25,6 s | 14,1 s | ringkasan, buka satu laporan |
+| `usr-form` | 40,0 s | 37,5 s | enam kolom, pesan merah per kolom, dropdown, pemilih tanggal |
+| `usr-isi` | 77,5 s | 26,1 s | jumlah unit, deskripsi ditolak lalu diperbaiki, kirim |
+| `usr-kirim` | 103,9 s | 10,2 s | SnackBar hijau, total 3 → 4 |
+| `usr-daftar` | 114,4 s | 12,4 s | daftar dan filter status |
 
-Satu bab dipotong lagi di dalam skrip itu: pada adegan "Kirim dan simpan data",
-klik tombol Kirim baru terjadi sekitar 19,5 detik, padahal narasi menyebutnya pada
-13,5 detik. Enam detik pertama klip dibuang supaya keduanya bertemu; sisa waktu
-adegan diisi gambar diam dari frame terakhir agar layar tidak membeku.
+Bilah Chrome setinggi 108 px tidak dipotong di berkas. `scenes/Demo.tsx` menggesernya
+keluar bingkai lewat CSS (`top: -99px` di dalam kotak `overflow: hidden`), sehingga
+berkas asli tetap utuh dan bisa diperiksa.
 
-Kursor pada rekaman adalah elemen DOM yang disuntikkan skrip, supaya gerakan mouse
-terlihat. Aplikasi tetap berjalan seperti biasa.
+Kalau narasi lebih panjang dari klip, adegan menahan frame terakhir beberapa saat
+(`ekor`), supaya tidak ada layar hitam di ujung adegan.
+
+Versi sebelumnya memakai rekaman Playwright (`scripts/rekam-demo.mjs`) dengan bingkai
+ponsel. Skrip itu masih ada, tetapi tidak dipakai lagi.
 
 ## Menjalankan ulang
 

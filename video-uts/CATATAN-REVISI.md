@@ -26,10 +26,10 @@ menyesuaikan **video ke kode**, bukan sebaliknya:
 
 ---
 
-## 2. Perubahan 4 November: video disusun ulang mengikuti brief UTS
+## 2. Perubahan 4–5 November: video disusun ulang mengikuti brief UTS
 
 Brief UTS meminta isi yang jauh lebih lengkap daripada versi sebelumnya
-(3 menit 18 detik, 7 adegan). Versi sekarang **7 menit 30 detik, 15 adegan**:
+(3 menit 18 detik, 7 adegan). Versi sekarang **7 menit 15 detik, 14 adegan**:
 
 | No | Adegan | Isi |
 | --- | --- | --- |
@@ -39,15 +39,16 @@ Brief UTS meminta isi yang jauh lebih lengkap daripada versi sebelumnya
 | 4 | Kebutuhan | Lima user story dan prioritasnya (Must/Should) |
 | 5 | Rancangan | User flow dan sitemap lima halaman |
 | 6 | Wireframe | Lima wireframe dan hasil implementasinya |
-| 7–13 | Demo | Login, Beranda, Form, Validasi, Kirim, Daftar, Detail |
-| 14 | Rencana teknis | Tech stack, koleksi Firestore, aturan keamanan |
-| 15 | Penutup | Rencana pertemuan 9–15, kendala, pelajaran |
+| 7–12 | Demo | Login, Beranda, Formulir, Pengisian, Kirim, Daftar |
+| 13 | Rencana teknis | Tech stack, koleksi Firestore, aturan keamanan |
+| 14 | Penutup | Rencana pertemuan 9–15, kendala, pelajaran |
 
-Demo pada adegan 7–13 adalah **rekaman aplikasi yang benar-benar berjalan di
-Chrome**, bukan animasi atau slide. Perekatannya dijelaskan di
-[`README.md`](README.md).
-
----
+Demo pada adegan 7–12 memakai **rekaman layar sendiri** aplikasi yang berjalan di
+Chrome — bukan animasi, bukan slide, dan bukan rekaman otomatis. Rekaman asli
+berdurasi 148 detik; yang dipakai 119 detik dalam enam potongan, dipotong pada
+transisi halaman supaya alurnya lurus. Nilai yang tampil di layar (Gedung D5-04, kategori Lainnya, urgensi
+Rendah, 1 unit, deskripsi AC) adalah nilai yang benar-benar diketik saat merekam,
+dan narasi dibuat mengikuti nilai itu — bukan sebaliknya.
 
 ## 3. Batas yang dijaga
 
