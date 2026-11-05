@@ -21,6 +21,9 @@ export type BabDemo = {
   detik: number;
   /** Gambar diam pengganti bila narasi lebih panjang dari klip. */
   ekor?: string;
+  /** Label kiri atas. Bawaannya label bagian video UTS. */
+  nomorBagian?: string;
+  labelBagian?: string;
 };
 
 /**
@@ -36,7 +39,16 @@ const TINGGI_PENUH = Math.round(1020 * SKALA); // 935
 const BILAH = Math.round(108 * SKALA); // 99
 const TINGGI = TINGGI_PENUH - BILAH; // 836
 
-export const Demo: React.FC<BabDemo> = ({klip, judul, caption, langkah, detik, ekor}) => {
+export const Demo: React.FC<BabDemo> = ({
+  klip,
+  judul,
+  caption,
+  langkah,
+  detik,
+  ekor,
+  nomorBagian = '06',
+  labelBagian = 'DEMO PROTOTYPE',
+}) => {
   const frame = useCurrentFrame();
   const {durationInFrames} = useVideoConfig();
   const klipFrames = Math.round(detik * 30);
@@ -44,8 +56,8 @@ export const Demo: React.FC<BabDemo> = ({klip, judul, caption, langkah, detik, e
   return (
     <AbsoluteFill>
       <Bagian
-        nomor="06"
-        teks="DEMO PROTOTYPE"
+        nomor={nomorBagian}
+        teks={labelBagian}
         kanan={`LANGKAH ${langkah} / 6 · ${judul.toUpperCase()}`}
       />
 

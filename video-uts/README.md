@@ -80,6 +80,23 @@ Kalau narasi lebih panjang dari klip, adegan menahan frame terakhir beberapa saa
 Versi sebelumnya memakai rekaman Playwright (`scripts/rekam-demo.mjs`) dengan bingkai
 ponsel. Skrip itu masih ada, tetapi tidak dipakai lagi.
 
+## Video demo mandiri
+
+Rekaman Chrome yang dipakai di video UTS tidak punya suara: jalur audionya ada,
+tetapi isinya digital senyap (RMS 0). Karena itu demo tidak bisa ditonton sendiri
+tanpa penjelasan. Komposisi `DemoSaja` menyusun ulang enam bab itu menjadi video
+demo mandiri berdurasi 2 menit 24 detik, lengkap dengan narasi:
+
+```bash
+python scripts/tts-demo.py     # narasi pembuka & penutup -> src/timings-demo.ts
+npx remotion render DemoSaja out/laporkampus-demo.mp4
+```
+
+Isinya: kartu pembuka yang menyebut enam langkah, enam bab demo dengan narasi yang
+sama seperti di video UTS, lalu kartu penutup berisi identitas dan tautan repo.
+Adegan demo dan durasinya dibaca dari `src/bab-demo.ts` dan `src/timings.ts` yang
+juga dipakai video UTS, jadi keduanya tidak bisa berbeda isi.
+
 ## Menjalankan ulang
 
 Prasyarat: Node.js 18+, Python 3.10+, Chrome terpasang, dan koneksi internet

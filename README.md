@@ -36,6 +36,8 @@ status.
 
 - **Tonton atau unduh:**  
   <https://github.com/wahyuharis03/laporkampus/releases/download/video-uts-final/laporkampus-uts.mp4>
+- **Demo saja (2:24, bernarasi):**  
+  <https://github.com/wahyuharis03/laporkampus/releases/download/video-uts-final/laporkampus-demo.mp4>
 - **Kode sumber video:** [`video-uts/`](video-uts/) — naskah, skrip TTS, skrip
   pemotong rekaman demo, dan komponen tiap adegan
 - **Catatan revisi naskah:** [`video-uts/CATATAN-REVISI.md`](video-uts/CATATAN-REVISI.md)
