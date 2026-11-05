@@ -29,8 +29,13 @@
 
   .halaman { page-break-after: auto; }
   .halaman + .halaman { margin-top: 9mm; }
-  .halaman.pecah { page-break-before: always; margin-top: 0; }
-  table.data, .kotak, .kartu-persona, .angka, .wire, .alur, pre { page-break-inside: avoid; }
+  .halaman.pecah { page-break-before: auto; margin-top: 9mm; }
+  .kotak, .kartu-persona, .angka, .wire, .alur, pre { page-break-inside: avoid; }
+  table.data { page-break-inside: auto; }
+  table.data tr { page-break-inside: avoid; }
+  table.data thead { display: table-header-group; }
+  p, li { orphans: 3; widows: 3; }
+  ol, ul { break-inside: avoid; page-break-inside: avoid; }
 
   .kepala {
     break-after: avoid; page-break-after: avoid;

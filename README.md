@@ -47,9 +47,8 @@ status.
 [`docs/Proposal-UTS-LaporKampus.pdf`](docs/Proposal-UTS-LaporKampus.pdf) memuat
 identitas, problem statement, persona, lima user story, kebutuhan fungsional dan
 prioritasnya, user flow, sitemap, wireframe beserta tautan Figma, tech stack, dan
-rancangan collection Firestore. Versi yang bisa disunting tersedia sebagai
-[`docs/Proposal-UTS-LaporKampus.docx`](docs/Proposal-UTS-LaporKampus.docx).
-Sumber PDF-nya ada di [`docs/proposal-uts.html`](docs/proposal-uts.html).
+rancangan collection Firestore. Sumbernya ada di
+[`docs/proposal-uts.html`](docs/proposal-uts.html).
 
 ## Tangkapan layar
 
