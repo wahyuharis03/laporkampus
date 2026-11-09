@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/data_laporan.dart';
+import '../layanan/auth_layanan.dart';
 import '../theme/app_theme.dart';
 import '../widgets/keadaan_kosong.dart';
 import '../widgets/label_status.dart';
@@ -37,8 +38,15 @@ class _BerandaPageState extends State<BerandaPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Beranda'),
-        actions: const <Widget>[
-          Padding(
+        actions: <Widget>[
+          // Keluar memicu authStateChanges(), lalu CekStatusLogin
+          // mengembalikan pengguna ke halaman masuk.
+          IconButton(
+            tooltip: 'Keluar',
+            icon: const Icon(Icons.logout),
+            onPressed: () => AuthLayanan.keluar(),
+          ),
+          const Padding(
             padding: EdgeInsets.only(right: jarakSedang),
             child: CircleAvatar(
               backgroundColor: latarHalaman,
