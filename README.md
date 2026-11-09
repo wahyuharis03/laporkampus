@@ -75,7 +75,7 @@ simulasi. Tidak ada data pribadi di dalamnya.
 
 | Kode | Halaman        | Prioritas | Keterangan                                                     |
 | ---- | -------------- | --------- | -------------------------------------------------------------- |
-| H1   | Login          | Must      | NIM dan password, validasi kolom kosong, di luar menu navigasi |
+| H1   | Login          | Must      | NIM atau email, dua mode Masuk/Daftar, di luar menu navigasi   |
 | H2   | Beranda        | Must      | Sapaan, ringkasan status, tombol aksi utama, laporan terbaru   |
 | H3   | Form Laporan   | Must      | Form 6 kolom dengan validasi, dibuka lewat `Navigator.push`    |
 | H4   | Laporan Saya   | Must      | Daftar laporan + filter status, keadaan kosong                 |
@@ -103,11 +103,17 @@ hijau bila laporan berhasil disimpan.
 
 ```
 lib/
-  main.dart                     # akar aplikasi: tema dan halaman pertama
+  main.dart                     # init Firebase, tema, halaman pertama
+  firebase_options.dart         # konfigurasi project Firebase
   data/
     data_laporan.dart           # model Laporan, data simulasi, helper format
+  layanan/
+    auth_layanan.dart           # pembungkus Firebase Auth, aturan NIM jadi email
+    pesan_galat.dart            # kode kesalahan Firebase jadi kalimat pengguna
   pages/
-    login_page.dart             # H1 Login
+    cek_status_login.dart       # gerbang status login (StreamBuilder)
+    login_page.dart             # H1 Login, dua mode: Masuk dan Daftar
+    halaman_konfigurasi.dart    # petunjuk bila Firebase belum disiapkan
     halaman_utama.dart          # NavigationBar / NavigationRail
     beranda_page.dart           # H2 Beranda
     form_laporan_page.dart      # H3 Form Laporan
@@ -119,13 +125,13 @@ lib/
     keadaan_kosong.dart         # komponen keadaan kosong yang dipakai ulang
     label_status.dart           # chip status Menunggu / Diproses / Selesai
 test/
-  widget_test.dart              # 7 widget test
+  widget_test.dart              # 18 test: aturan akun, login, beranda, form
 docs/                           # screenshot untuk README
 ```
 
 ## Cara menjalankan
 
-Prasyarat: Flutter SDK 3.x, Chrome, dan Git.
+Prasyarat: Flutter SDK 3.x, Chrome, Git, dan Node.js (untuk Firebase CLI).
 
 ```bash
 # 1. Ambil kode
@@ -135,23 +141,65 @@ cd laporkampus
 # 2. Pasang dependensi
 flutter pub get
 
-# 3. Jalankan di Chrome
+# 3. Hubungkan ke project Firebase Anda
+dart pub global activate flutterfire_cli
+firebase login
+flutterfire configure --platforms=web
+
+# 4. Jalankan di Chrome
 flutter run -d chrome
 ```
+
+Sebelum langkah 3, siapkan project Firebase lebih dulu di
+`console.firebase.google.com`:
+
+1. Buat project baru, tetap di paket **Spark** (tanpa billing account).
+   Gemini dan Google Analytics boleh dimatikan.
+2. Buka **Security > Authentication > Sign-in method**, aktifkan
+   **Email/Password**. Tanpa langkah ini login gagal dengan
+   `operation-not-allowed`.
+3. Buka **Project settings**, klik ikon `</>` untuk mendaftarkan aplikasi web.
+
+`flutterfire configure` menimpa `lib/firebase_options.dart` dengan nilai dari
+project Anda. Bila CLI gagal terpasang, salin objek `firebaseConfig` dari
+Project settings lalu ganti setiap nilai bertanda `GANTI` di file itu.
+Isi file tersebut adalah pengenal project, bukan password, sehingga aman
+di-commit.
+
+Bila langkah 3 terlewat, aplikasi tidak menampilkan layar putih: ia berhenti
+di halaman petunjuk berisi langkah perbaikan.
 
 Perintah pendukung:
 
 ```bash
 flutter analyze   # memeriksa masalah kode
-flutter test      # menjalankan widget test
+flutter test      # menjalankan 18 test tanpa menghubungi Firebase
 ```
+
+## Catatan tentang autentikasi
+
+Login memakai Firebase Authentication dengan penyedia Email/Password. Karena
+Firebase mewajibkan email sedangkan aplikasi memakai NIM, `auth_layanan.dart`
+mengubah NIM menjadi `<nim>@laporkampus.app`. Kolom login tetap menerima
+keduanya: bila pengguna mengetik email, dipakai apa adanya.
+
+Sesi dikelola Firebase, jadi tetap bertahan setelah halaman di-refresh.
+Perpindahan halaman tidak memakai `Navigator`: `CekStatusLogin` mendengarkan
+`authStateChanges()` dan memilih halaman yang sesuai. Inilah sebabnya setelah
+login berhasil halaman berganti sendiri, dan setelah menekan Keluar pengguna
+kembali ke halaman masuk.
+
+Pesan kesalahan sengaja tidak membocorkan apakah sebuah email terdaftar.
+Kode `invalid-credential`, `wrong-password`, dan `user-not-found` semuanya
+ditampilkan sebagai "Email atau password salah".
 
 ## Catatan tentang data
 
-Data masih disimpan di `List<Laporan>` di memori (`lib/data/data_laporan.dart`).  
+Data laporan masih disimpan di `List<Laporan>` di memori (`lib/data/data_laporan.dart`).  
 Laporan yang dikirim akan tampil di Beranda dan Laporan Saya selama aplikasi  
 berjalan, lalu kembali ke data simulasi awal setelah aplikasi dimuat ulang.  
-Pemindahan data ke Cloud Firestore dilakukan setelah UTS.
+Sesi login bertahan, tetapi laporan belum: pemindahan data ke Cloud Firestore
+dilakukan pada Minggu 10.
 
 ## Gaya visual
 
@@ -166,7 +214,8 @@ Mengikuti style guide mini Minggu 4. Palet sengaja dibatasi lima warna:
 
 - Flutter + Dart, Firebase paket Spark (tanpa billing account)
 - Autentikasi email/password, bukan OTP telepon
-- Tanpa Cloud Functions, payment gateway, dan paket tambahan dari pub.dev
+- Tanpa Cloud Functions dan payment gateway. Paket dari pub.dev dibatasi pada
+  `firebase_core` dan `firebase_auth`
 - Satu peran pengguna: mahasiswa
 
 ## Riwayat pertemuan
@@ -180,3 +229,5 @@ Mengikuti style guide mini Minggu 4. Palet sengaja dibatasi lima warna:
 | 5      | Project Flutter berjalan, repository GitHub, README                  |
 | 6      | Lima halaman terhubung, NavigationBar, data simulasi, keadaan kosong |
 | 7      | Form Laporan dengan validasi, SnackBar status, dan state sederhana   |
+| 8      | UTS: proposal, video presentasi, repository                          |
+| 9      | Firebase Authentication: daftar, masuk, keluar, gerbang status login |
